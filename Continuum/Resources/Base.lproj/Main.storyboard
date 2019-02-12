@@ -18,14 +18,48 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="258" id="MBU-qa-atM">
-                                <rect key="frame" x="0.0" y="28" width="375" height="258"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="postCell" rowHeight="434" id="MBU-qa-atM" customClass="PostTableViewCell" customModule="Continuum" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="434"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MBU-qa-atM" id="urp-Ct-ksQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="257.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="433.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="XUX-Ae-1dY">
+                                            <rect key="frame" x="32" y="16" width="311" height="391"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spaceEmptyState" translatesAutoresizingMaskIntoConstraints="NO" id="r4a-Hg-6o8">
+                                                    <rect key="frame" x="0.0" y="0.0" width="311" height="311"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="r4a-Hg-6o8" secondAttribute="height" multiplier="1:1" id="DKD-IF-ct3"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="(Caption)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ca-pj-dQS">
+                                                    <rect key="frame" x="0.0" y="319" width="311" height="43.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Comment Count)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cJ0-XZ-fIy">
+                                                    <rect key="frame" x="0.0" y="370.5" width="311" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="XUX-Ae-1dY" secondAttribute="bottom" constant="16" id="b66-xW-97d"/>
+                                        <constraint firstItem="XUX-Ae-1dY" firstAttribute="leading" secondItem="urp-Ct-ksQ" secondAttribute="leading" constant="32" id="j8D-Ve-6Tw"/>
+                                        <constraint firstItem="XUX-Ae-1dY" firstAttribute="top" secondItem="urp-Ct-ksQ" secondAttribute="top" constant="16" id="txP-4D-rjF"/>
+                                        <constraint firstAttribute="trailing" secondItem="XUX-Ae-1dY" secondAttribute="trailing" constant="32" id="yak-0p-2F3"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="captionLabel" destination="8Ca-pj-dQS" id="qLP-6f-B3i"/>
+                                    <outlet property="commentCountLabel" destination="cJ0-XZ-fIy" id="Xmt-bP-1gM"/>
+                                    <outlet property="postPhotoImageView" destination="r4a-Hg-6o8" id="kt6-YB-kgu"/>
                                     <segue destination="Kp2-JW-j59" kind="show" id="5lK-bp-rw9"/>
                                 </connections>
                             </tableViewCell>
@@ -155,4 +189,7 @@
             <point key="canvasLocation" x="369" y="832"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="spaceEmptyState" width="768" height="426.75"/>
+    </resources>
 </document>

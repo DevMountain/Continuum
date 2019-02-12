@@ -10,6 +10,8 @@ import UIKit
 
 class PostDetailTableViewController: UITableViewController {
 
+  var post: Post?
+  
     override func viewDidLoad() {
         super.viewDidLoad()
 
