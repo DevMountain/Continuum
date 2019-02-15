@@ -15,6 +15,7 @@
 		F70EAE372213462E0096DB13 /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EAE362213462E0096DB13 /* PostController.swift */; };
 		F70EAE3A22134A670096DB13 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EAE3922134A670096DB13 /* PostTableViewCell.swift */; };
 		F70EAE3D22137F2A0096DB13 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EAE3C22137F2A0096DB13 /* DateExtension.swift */; };
+		F7AC053E221737080002D7A6 /* SearchableRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC053D221737080002D7A6 /* SearchableRecord.swift */; };
 		F7F99C392211F96400D13C4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F99C382211F96400D13C4C /* AppDelegate.swift */; };
 		F7F99C3E2211F96400D13C4C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7F99C3C2211F96400D13C4C /* Main.storyboard */; };
 		F7F99C402211F96600D13C4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7F99C3F2211F96600D13C4C /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 		F70EAE362213462E0096DB13 /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
 		F70EAE3922134A670096DB13 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		F70EAE3C22137F2A0096DB13 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		F7AC053D221737080002D7A6 /* SearchableRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableRecord.swift; sourceTree = "<group>"; };
 		F7F99C352211F96400D13C4C /* Continuum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Continuum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7F99C382211F96400D13C4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F7F99C3D2211F96400D13C4C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				F70EAE352213461A0096DB13 /* Models */,
 				F70EAE38221348710096DB13 /* ModelControllers */,
 				F70EAE3B22134A6D0096DB13 /* Views */,
+				F7AC053D221737080002D7A6 /* SearchableRecord.swift */,
 			);
 			path = Continuum;
 			sourceTree = "<group>";
@@ -196,6 +199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7AC053E221737080002D7A6 /* SearchableRecord.swift in Sources */,
 				F7F99C392211F96400D13C4C /* AppDelegate.swift in Sources */,
 				F70EAE342213455D0096DB13 /* Comment.swift in Sources */,
 				F70EAE2A221340D20096DB13 /* PostListTableViewController.swift in Sources */,
