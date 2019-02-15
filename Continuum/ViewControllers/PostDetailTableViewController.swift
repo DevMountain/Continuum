@@ -58,6 +58,9 @@ class PostDetailTableViewController: UITableViewController {
   }
   
   @IBAction func shareButtonTapped(_ sender: Any) {
+    guard let comment = post?.caption else { return }
+    let shareSheet = UIActivityViewController(activityItems: [comment], applicationActivities: nil)
+    present(shareSheet, animated: true, completion: nil)
   }
   
   @IBAction func followButtonTapped(_ sender: Any) {
