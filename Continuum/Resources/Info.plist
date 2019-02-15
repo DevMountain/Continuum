@@ -41,5 +41,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>We use your camera to allow you to take and post pictures right in the app</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We acces your photos to allow you to select and upload pictures to the Continuum feed</string>
 </dict>
 </plist>

@@ -16,6 +16,7 @@
 		F70EAE3A22134A670096DB13 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EAE3922134A670096DB13 /* PostTableViewCell.swift */; };
 		F70EAE3D22137F2A0096DB13 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EAE3C22137F2A0096DB13 /* DateExtension.swift */; };
 		F7AC053E221737080002D7A6 /* SearchableRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC053D221737080002D7A6 /* SearchableRecord.swift */; };
+		F7AC0540221742410002D7A6 /* PhotoSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC053F221742410002D7A6 /* PhotoSelectorViewController.swift */; };
 		F7F99C392211F96400D13C4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F99C382211F96400D13C4C /* AppDelegate.swift */; };
 		F7F99C3E2211F96400D13C4C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7F99C3C2211F96400D13C4C /* Main.storyboard */; };
 		F7F99C402211F96600D13C4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7F99C3F2211F96600D13C4C /* Assets.xcassets */; };
@@ -32,6 +33,7 @@
 		F70EAE3922134A670096DB13 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		F70EAE3C22137F2A0096DB13 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		F7AC053D221737080002D7A6 /* SearchableRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableRecord.swift; sourceTree = "<group>"; };
+		F7AC053F221742410002D7A6 /* PhotoSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorViewController.swift; sourceTree = "<group>"; };
 		F7F99C352211F96400D13C4C /* Continuum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Continuum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7F99C382211F96400D13C4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F7F99C3D2211F96400D13C4C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 				F70EAE29221340D20096DB13 /* PostListTableViewController.swift */,
 				F70EAE2B221341BB0096DB13 /* PostDetailTableViewController.swift */,
 				F70EAE2D2213422D0096DB13 /* AddPostTableViewController.swift */,
+				F7AC053F221742410002D7A6 /* PhotoSelectorViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 			files = (
 				F7AC053E221737080002D7A6 /* SearchableRecord.swift in Sources */,
 				F7F99C392211F96400D13C4C /* AppDelegate.swift in Sources */,
+				F7AC0540221742410002D7A6 /* PhotoSelectorViewController.swift in Sources */,
 				F70EAE342213455D0096DB13 /* Comment.swift in Sources */,
 				F70EAE2A221340D20096DB13 /* PostListTableViewController.swift in Sources */,
 				F70EAE3A22134A670096DB13 /* PostTableViewCell.swift in Sources */,
