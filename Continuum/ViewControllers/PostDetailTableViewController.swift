@@ -45,6 +45,7 @@ class PostDetailTableViewController: UITableViewController {
         let post = self.post else { return }
       PostController.shared.addComment(text: commentText, post: post, completion: { (comment) in
       })
+      self.tableView.reloadData()
     }
     alertController.addAction(cancelAction)
     alertController.addAction(commentAction)
@@ -53,6 +54,7 @@ class PostDetailTableViewController: UITableViewController {
   
   //MARK: - Actions
   @IBAction func commentButtonTapped(_ sender: Any) {
+    presentCommentAlertController()
   }
   
   @IBAction func shareButtonTapped(_ sender: Any) {
@@ -64,10 +66,6 @@ class PostDetailTableViewController: UITableViewController {
 
 // MARK: - UITableViewDataSource
 extension PostDetailTableViewController {
-  override func numberOfSections(in tableView: UITableView) -> Int {
-    // #warning Incomplete implementation, return the number of sections
-    return 0
-  }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return post?.comments.count ?? 0
