@@ -24,12 +24,15 @@ class PostListTableViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     postSearchBar.delegate = self
+    performFullSync(completion: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    resultsArray = PostController.shared.posts
-    tableView.reloadData()
+    DispatchQueue.main.async {
+      self.resultsArray = PostController.shared.posts
+      self.tableView.reloadData()
+    }
   }
   
   // MARK: - Table view data source
@@ -42,6 +45,18 @@ class PostListTableViewController: UITableViewController {
     let post = dataSource[indexPath.row] as? Post
     cell.post = post
     return cell
+  }
+  
+  //MARK: - Methods
+  func performFullSync(completion:((Bool) ->Void)?){
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    PostController.shared.fetchPosts { (posts) in
+      DispatchQueue.main.async {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        self.tableView.reloadData()
+        completion?(posts != nil)
+      }
+    }
   }
   
   // MARK: - Navigation

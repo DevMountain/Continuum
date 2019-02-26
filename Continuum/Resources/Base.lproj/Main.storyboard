@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -217,25 +218,25 @@
                                                 <constraint firstAttribute="width" secondItem="4rN-Ml-2tW" secondAttribute="height" multiplier="1:1" id="UXM-5D-FpM"/>
                                             </constraints>
                                         </imageView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Xcy-sI-2ha">
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Xcy-sI-2ha">
                                             <rect key="frame" x="0.0" y="278" width="262" height="38.333333333333314"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SSo-s1-2bt" userLabel="Comment">
-                                                    <rect key="frame" x="0.0" y="4.3333333333333712" width="87.333333333333329" height="30"/>
+                                                    <rect key="frame" x="0.0" y="4.3333333333333712" width="94.333333333333329" height="30"/>
                                                     <state key="normal" title="Comment"/>
                                                     <connections>
                                                         <action selector="commentButtonTapped:" destination="Kp2-JW-j59" eventType="touchUpInside" id="ptm-Nx-8X2"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8m-jD-ojh">
-                                                    <rect key="frame" x="87.333333333333343" y="4.3333333333333712" width="87.333333333333343" height="30"/>
+                                                    <rect key="frame" x="94.333333333333343" y="4.3333333333333712" width="56.333333333333343" height="30"/>
                                                     <state key="normal" title="Share"/>
                                                     <connections>
                                                         <action selector="shareButtonTapped:" destination="Kp2-JW-j59" eventType="touchUpInside" id="K1D-UZ-J3E"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ow4-7N-Oeu">
-                                                    <rect key="frame" x="174.66666666666669" y="4.3333333333333712" width="87.333333333333314" height="30"/>
+                                                    <rect key="frame" x="150.66666666666669" y="4.3333333333333712" width="111.33333333333331" height="30"/>
                                                     <state key="normal" title="Follow Post"/>
                                                     <connections>
                                                         <action selector="followButtonTapped:" destination="Kp2-JW-j59" eventType="touchUpInside" id="sp8-um-hxZ"/>
@@ -285,6 +286,8 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="buttonStackView" destination="Xcy-sI-2ha" id="Ljh-Hu-yBa"/>
+                        <outlet property="followPostButton" destination="Ow4-7N-Oeu" id="qZN-dq-XET"/>
                         <outlet property="photoImageView" destination="4rN-Ml-2tW" id="5Ka-an-cw5"/>
                     </connections>
                 </tableViewController>
@@ -378,6 +381,7 @@
                             <constraint firstItem="yhJ-qM-rH6" firstAttribute="top" secondItem="HfP-Fj-hgC" secondAttribute="top" id="scy-2P-NtC"/>
                             <constraint firstAttribute="bottom" secondItem="o8L-zr-waU" secondAttribute="bottom" id="utM-K1-LWU"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="l2m-Na-tJD"/>
                     </view>
                     <connections>
                         <outlet property="photoImageView" destination="o8L-zr-waU" id="xHf-BY-vAq"/>

@@ -12,6 +12,8 @@ class PostDetailTableViewController: UITableViewController {
   
   //MARK: - IBOutlets
   @IBOutlet weak var photoImageView: UIImageView!
+  @IBOutlet weak var followPostButton: UIButton!
+  @IBOutlet weak var buttonStackView: UIStackView!
   
   //MARK: - Properties
   var post: Post?{
@@ -24,13 +26,33 @@ class PostDetailTableViewController: UITableViewController {
   //MARK: - View Lifecycle Methods
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    guard let post = post else { return }
+    PostController.shared.fetchComments(for: post) { (_) in
+      DispatchQueue.main.async {
+        self.tableView.reloadData()
+      }
+    }
   }
   
   //MARK: - Methods
-  func updateViews() {
-    photoImageView.image = post?.photo
+  @objc func updateViews() {
+    guard let post = post else { return }
+    photoImageView.image = post.photo
     tableView.reloadData()
+    updateFollowPostButtonText()
+  }
+  
+  func updateFollowPostButtonText(){
+    guard let post = post else { return }
+    //Check CloudKit for a subscription to this post and adjust the text of the button to reflect this
+    PostController.shared.checkForSubscription(to: post) { (found) in
+      DispatchQueue.main.async {
+        let followPostButtonText = found ? "Unfollow Post" : "Follow Post"
+        self.followPostButton.setTitle(followPostButtonText, for: .normal)
+        //Asks the stackview to resize the button if it is necesssary to accomodate the new text
+        self.buttonStackView.layoutIfNeeded()
+      }
+    }
   }
   
   func presentCommentAlertController() {
@@ -64,6 +86,14 @@ class PostDetailTableViewController: UITableViewController {
   }
   
   @IBAction func followButtonTapped(_ sender: Any) {
+    guard let post = post else { return }
+    PostController.shared.toggleSubscriptionTo(commentsForPost: post, completion: { (success, error) in
+      if let error = error{
+        print("\(error.localizedDescription) \(error) in function: \(#function)")
+        return
+      }
+      self.updateFollowPostButtonText()
+    })
   }
 }
 
