@@ -576,8 +576,9 @@ We're going to create a function that will allow us to fetch all the comments fo
 4. Add a second predicate to includes all of the commentID's that have NOT been fetched.
 
 <details closed>
-	<summmary><strong> Fetching Comments Query </strong></summary>
+	<summmary>Fetching Comments Query</summary>
 	<br>
+	
 ```swift 
     let postRefence = post.recordID
     let predicate = NSPredicate(format: "%K == %@", CommentConstants.postReferenceKey, postRefence)
@@ -685,4 +686,3 @@ Update the Info.plist to declare backgrounding support for responding to remote 
 	* note: Use the `requestAuthorization` function that is a part of `UNUserNotificationCenter`.
 3. Register the App to receive push notifications `application.registerForRemoteNotifications()`
 
-#ios/READMES
