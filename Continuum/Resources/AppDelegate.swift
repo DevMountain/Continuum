@@ -20,14 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       let fetchedUserStatment = success ? "Successfully retrieved a logged in user" : "Failed to retrieve a logged in user"
        print(fetchedUserStatment)
     }
-    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (success, error) in
-      if let error = error {
-        print("💩  There was an error in \(#function) ; \(error)  ; \(error.localizedDescription)  💩")
-        return
-      }
-      success ? print("Successfully authorized to send push notfiication") : print("DENIED, Can't send this person notificiation")
-    }
-    application.registerForRemoteNotifications()
     return true
   }
 
