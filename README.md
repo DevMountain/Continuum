@@ -39,7 +39,7 @@ If you were in an interview and a developer asked you why you chose to use Cloud
 * Apple-level privacy protection.
 * It comes with a wealth of good resources, from Apple Programming Guides, WWDC videos on cloudKit best practices, and documentation.
 
-All of these apps use cloudKit. Millions of users make use of these app every day. If you work hard this week to learn these covered concepts, you'll see it pay off in your capstones.
+All of these apps use cloudKit. Millions of users make use of these app every day. Beyond this, the concepts you'll learn when working with CloudKit will apply to almost any backend you use throughout your career.
 
 ![](README/ECDA1D93-4180-43C0-AA46-DEFCDB644070.png)
 
@@ -90,7 +90,11 @@ Create a `Post` model object that will hold image data and comments.
 2. Add a `photoData` property of type `Data?`, a `timestamp` `Date` property, a `caption` of type `String`, and a `comments` property of type `[Comment]`. *You will get a “undeclared type” error as we have not cerated the* `Comment` *model object. Ignore this for now*
 3. Add a computed property, `photo` with a getter which returns a `UIImage` initialized using the data in `photoData` and a setter which adjusts the value of the `photoData` property to match that of the `newValue` for UIImage.  *Notice, the initalizer for `UIImage(data: )` is failable and will return an optional UIImage and that `newValue.jpegData(compressionQuality: )` optional data.  You will need to handle these optionals by making `photoData` and `photo` optional properties.*
 
-```
+<details closed>
+	<summary><strong>Computed Photo Property</strong></summary>
+	<br>
+
+```swift
 var photo: UIImage?{
     get{
         guard let photoData = photoData else {return nil}
@@ -101,6 +105,10 @@ var photo: UIImage?{
     }
 }
 ```
+
+</details>
+
+<p></p>
 
 4. Add an initializer that accepts a photo, caption, timestamp,  and comments array. Provide a default values for the `timestamp` argument equal to the current date i.e. `Date()` and a default value for the `comments` of an empty array.
 *Because* `photo` *is a computed property, you may get this error:*
@@ -237,11 +245,19 @@ Use a UISearchbar to allow a user to search through different posts for the give
 3. Add an `isSearching` property at the top of the class which stores a `Bool` value set to `false` by default
 4. Created a computed property called `dataSource` as an array of `Post` Which will return the `resultsArray` if `isSearching` is `true` and the `PostController.shared.posts` if `isSearching` is `false`.
 
+<details closed>
+	<summary><strong>var dataSource: [SearchableRecord]</strong></summary>
+	<br>
+	
 ```swift
 var dataSource: [SearchableRecord] {
     return isSearching ? resultsArray : PostController.shared.posts
   }
 ```
+	
+</details>
+
+<p></p>
 
 6. Refactor the `UITableViewDataSource` methods to populate the tableView with the new `dataSource` property.
 7. In `ViewWillAppear` set the results array equal to the `PostController.shared.posts`.
@@ -334,7 +350,9 @@ When you finish this part, the app will support syncing photos, posts, and comme
 * 3.1. Save the image temporarily to disk
 * 3.2. Create the CKAsset
 
-It looks like this:
+<details closed>
+	<summary><strong>var imageAsset: CKAsset?</strong></summary>
+	<br>
 
 ```swift
     var imageAsset: CKAsset? {
@@ -351,14 +369,22 @@ It looks like this:
         }
     }
 ```
+
+</details>
+
+<p></p>
+
 The whole point of the above computed property is to read and write for our photo property. Look up `CKAsset`, it can only take a fileURL. 
 
 3. We will need a way of converting local `Post` objects into a type which can be saved to CloudKit (i.e. CKRecords).  To achieve this, we will extend CloudKit’s `CKRecord` class and add a  convenience initializer which takes in a single `Post` instance.
 	* Initialize a `CKRecord` with recordType of “Post” and recordID of the post’s recordID property.
 	* Set the values of the CKRecord with the post’s properties.  CloudKit only supports saving Foundational Types (save dictionaries) and will not allow saving `UIImage` or `Comment` instances.  We will therefore need to save a `CKAsset` instead of an image.  We will ignore comments for now, and come back to them using a process called back referencing.
 	* *Note: Setting the values of this glorified dictionary will require many 	hardcoded string which can lead to typo errors especially in larger projects.  Consider creating a constants struct to hold each of these string values.*
-<detail>
-<summary>CKRecord Extension</summary>
+	
+<details closed>
+	<summary><strong>CKRecord Extension</strong></summary>
+	<br>
+	
 ```swift
 extension CKRecord {
   convenience init?(post: Post) {
@@ -369,6 +395,7 @@ extension CKRecord {
   }
 }
 ```
+
 ```swift
 struct PostConstants {
   static let typeKey = "Post"
@@ -378,7 +405,11 @@ struct PostConstants {
   static let photoKey = "photo"
 }
 ```
-</detail>
+
+</details>
+
+<div></div>
+
 1. Add a failable initializer to `Post` which takes in a CKRecord.  
 	* Remember, a CKRecord is little more than a glorified dictionary.  Pull all of the necessary values out of the CKRecord, casting and unwrapping them as necessary, then call the original designated initializer you edited in the previous step
 	* You will need to first get the CKAsset back from the CKRecord then use its `fileURL` property to initialize `Data`
@@ -402,12 +433,22 @@ You will likely run into some issues as you try to save the comment’s post pro
 CloudKit contains a special class for creating references like this called `CKRecord.Reference`.  Please read through the documentation for `CKRecord.Reference` [here](https://developer.apple.com/documentation/cloudkit/ckrecord/reference) . Using a `CKRecord.Reference`  is preferable to just saving the post’s recordID as a string because CloudKit will then handle writing operations for us on the relationship.  For example, if I delete a post, a `CKRecord.Reference` may allow CloudKit to automatically delete all of its  associated comments.  
 
 5. Add a computed property of types `CKRecord.Reference?` to the comment class.  This should return a new `CKRecord.Reference` using the comment’s post object
+
+<details closed>
+<summary><strong>var postReference: CKRecord.Reference</strong></summary>
+	<br>
+
 ``` swift
  var postReference: CKRecord.Reference? {
     guard let post = post else { return nil }
     return CKRecord.Reference(recordID: post.recordID, action: .deleteSelf)
   }
 ```
+
+</details>
+
+<p></p>
+
 6. Revisit your convenience initializer on `CKRecord` which takes in a comment and add the postReference to the record being created.
 7. Add a failable convenience initializer on the `Comment` class which takes in a `CKRecord` and a `Post`.  Unwrap the necessary properties for a comment from the ckRecord and call the designated initializer we wrote earlier.
 
@@ -427,8 +468,10 @@ If the user isn't signed into their iCloud account, they will not be able to sav
 3. Call this newly minted function in the `application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool`  delegate method to check the user’s account status when the app is launched. 
 
 Take a moment and try this on your own if you get stuck here is the code for the AppDelegate and Extension of UIViewController.
-<detail>
-<summary>I swear I spent 10 minutes on my own before clicking this button</summary>
+
+<details closed>
+<summary><strong>I swear I spent 10 minutes on my own before clicking this button</strong></summary>
+	
 ```swift
 import UIKit
 import CloudKit
@@ -475,7 +518,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 ```
-*(In a Separate File)*
+<div></div>
+<p>*(In a Separate File)*</p>
+<div></div>
 ```swift
 extension UIViewController {
   func presentSimpleAlertWith(title: String, message: String?) {
@@ -486,7 +531,10 @@ extension UIViewController {
   }
 }
 ```
-</detail>
+
+</details>
+
+<div></div>
 
 ## Update the Post Controller for CloudKit functionality
 #### Saving Records
@@ -527,6 +575,9 @@ We're going to create a function that will allow us to fetch all the comments fo
 * Because we don't want to fetch every comment ever created, we must use a different `NSPredicate` then the default one. Create a predicate that checks the value of the correct field that corresponds to the post `CKReference` on the Comment record against the `CKReference` you created in the previous step.
 4. Add a second predicate to includes all of the commentID's that have NOT been fetched.
 
+<details closed>
+	<summmary><strong> Fetching Comments Query </strong></summary>
+	<br>
 ```swift 
     let postRefence = post.recordID
     let predicate = NSPredicate(format: "%K == %@", CommentConstants.postReferenceKey, postRefence)
@@ -535,6 +586,10 @@ We're going to create a function that will allow us to fetch all the comments fo
     let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, predicate2]
     let query = CKQuery(recordType: "Comment", predicate: compoundPredicate) 
 ```
+
+</details>
+
+<div></div>
 
 5. In the completion closure of the perform(query) , follow the common pattern of checking for errors, making sure the records exist, then create an array of comments using the array of records.
 6. Append the contents of the newly created array of comments to the posts comments array.
