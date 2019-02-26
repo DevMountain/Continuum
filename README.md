@@ -575,10 +575,6 @@ We're going to create a function that will allow us to fetch all the comments fo
 * Because we don't want to fetch every comment ever created, we must use a different `NSPredicate` then the default one. Create a predicate that checks the value of the correct field that corresponds to the post `CKReference` on the Comment record against the `CKReference` you created in the previous step.
 4. Add a second predicate to includes all of the commentID's that have NOT been fetched.
 
-<details closed>
-	<summmary>Fetching Comments Query</summary>
-	<br>
-	
 ```swift 
     let postRefence = post.recordID
     let predicate = NSPredicate(format: "%K == %@", CommentConstants.postReferenceKey, postRefence)
@@ -587,10 +583,6 @@ We're going to create a function that will allow us to fetch all the comments fo
     let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, predicate2]
     let query = CKQuery(recordType: "Comment", predicate: compoundPredicate) 
 ```
-
-</details>
-
-<div></div>
 
 5. In the completion closure of the perform(query) , follow the common pattern of checking for errors, making sure the records exist, then create an array of comments using the array of records.
 6. Append the contents of the newly created array of comments to the posts comments array.
