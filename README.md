@@ -607,10 +607,7 @@ You may have noticed that it takes a long time to fetch the results from CloudKi
 
 #### Update the Post Detail Table View Controller
 
-1. In `viewDidLoad()` of the `PostDetailTableViewController` call 
-2. 
-3. start observing the `PostController.PostCommentsChangedNotification`.
-4. In your observation method, check that the notification's object is the post whose detail is being displayed, and if so, reload the table view.
+1. In `viewDidLoad()` of the `PostDetailTableViewController` call your fetch comments function and reload the tableView
 
 #### Check Functionality
 At this point the app should support basic push and fetch syncing from CloudKit. Use your Simulator and your Device to create new `Post` and `Comment` objects. Check for and fix any bugs.
