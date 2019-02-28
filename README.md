@@ -580,7 +580,7 @@ We're going to create a function that will allow us to fetch all the comments fo
     let predicate = NSPredicate(format: "%K == %@", CommentConstants.postReferenceKey, postRefence)
     let commentIDs = post.comments.compactMap({$0.recordID})
     let predicate2 = NSPredicate(format: "NOT(recordID IN %@)", commentIDs)
-    let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, predicate2]
+    let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, predicate2])
     let query = CKQuery(recordType: "Comment", predicate: compoundPredicate) 
 ```
 
@@ -588,12 +588,10 @@ We're going to create a function that will allow us to fetch all the comments fo
 6. Append the contents of the newly created array of comments to the posts comments array.
 7. Call your completion and pass in the comments which were fetched.
 
-### Fetching Data for the PostListTableVIewController
+### Fetching Data for the PostListTableViewController
 
-1. In the `PostListTableViewController` add a new function to request a full sync operation that takes an optional completion closure. Implement the function by turning on the network activity indicator, calling the `fetchPosts` function on the `PostController`.  Reload the tableView and turn the network activity indicator off in the completion.
-2. Call the function in the `viewDidLoad` lifecycle function to initiate a full sync when the user first opens the application.
-
-4. In `viewDidLoad()`, start observing the `PostController.PostsChangedNotification`. In your observation method, reload the table view.
+1. In the `PostListTableViewController` add a new function to request a full sync operation that takes in an optional completion closure. Implement the function by turning on the network activity indicator, calling the `fetchPosts` function on the `PostController`.  Reload the tableView and turn the network activity indicator off in the completion.
+2. Call the function in the `viewDidLoad` to initiate a full sync when the user first opens the application.
 
 ### Restructuring the Post Model to Optimize Fetch Times
 You may have noticed that it takes a long time to fetch the results from CloudKit.  Moreover, there is a major bug.  Post objects, when they are initially fetched from CloudKit will display a comment count of 0 in the PostListTableViewController.  In order to display these with our current app structure, we would need to fetch all of the post, then for each post, go fetch all of its comments.  This is a heavy ask for CloudKit and could hang out UI fairly quickly.  Meanwhile we don’t even need the data for those comments until a user clicks into the detail view for post.  We will need to refactor our `Post` model to keep track of how many comments it has, and delay the fetching of comments until a user click on the detail page for a post.
