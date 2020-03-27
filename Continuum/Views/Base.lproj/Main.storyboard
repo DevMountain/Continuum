@@ -52,7 +52,7 @@
                                             <rect key="frame" x="32" y="16" width="311" height="433"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spaceEmptyState" translatesAutoresizingMaskIntoConstraints="NO" id="r4a-Hg-6o8">
-                                                    <rect key="frame" x="0.0" y="0.0" width="311" height="311.00000000000011"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="311" height="311"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="r4a-Hg-6o8" secondAttribute="height" multiplier="1:1" id="DKD-IF-ct3"/>
                                                     </constraints>

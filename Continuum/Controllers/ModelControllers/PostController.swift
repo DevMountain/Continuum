@@ -175,9 +175,9 @@ class PostController {
         let subscription = CKQuerySubscription(recordType: "Comment", predicate: predicate, subscriptionID: post.recordID.recordName, options: CKQuerySubscription.Options.firesOnRecordCreation)
         
         let notificationInfo = CKSubscription.NotificationInfo()
+        notificationInfo.title = "New Comment"
         notificationInfo.alertBody = "A new comment was added to a post that you follow"
-        notificationInfo.shouldSendContentAvailable = true
-        notificationInfo.desiredKeys = nil
+        notificationInfo.shouldBadge = true
         subscription.notificationInfo = notificationInfo
         
         publicDB.save(subscription) { (_, error) in

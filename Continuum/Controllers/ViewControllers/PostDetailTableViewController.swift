@@ -31,6 +31,9 @@ class PostDetailTableViewController: UITableViewController {
         
         PostController.sharedInstance.fetchComments(for: post) { (_) in
             DispatchQueue.main.async {
+                PostController.sharedInstance.incrementCommentCount(for: post) { (success) in
+                    print("set comment count")
+                }
                 self.tableView.reloadData()
             }
         }

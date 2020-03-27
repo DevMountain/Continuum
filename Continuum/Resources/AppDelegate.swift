@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             success ? print("Successfully authorized to send push notfiication") : print("DENIED, Can't send this person notificiation")
         }
-        application.registerForRemoteNotifications()
+        UIApplication.shared.registerForRemoteNotifications()
         return true
     }
     
