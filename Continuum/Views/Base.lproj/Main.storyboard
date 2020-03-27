@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Post List Table View Controller-->
+        <!--Posts-->
         <scene sceneID="TQ5-uR-NN0">
             <objects>
                 <tableViewController id="eEp-2K-tRx" customClass="PostListTableViewController" customModule="Continuum" customModuleProvider="target" sceneMemberID="viewController">
@@ -52,7 +52,7 @@
                                             <rect key="frame" x="32" y="16" width="311" height="433"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spaceEmptyState" translatesAutoresizingMaskIntoConstraints="NO" id="r4a-Hg-6o8">
-                                                    <rect key="frame" x="0.0" y="0.0" width="311" height="311"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="311" height="311.00000000000011"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="r4a-Hg-6o8" secondAttribute="height" multiplier="1:1" id="DKD-IF-ct3"/>
                                                     </constraints>
@@ -92,7 +92,7 @@
                             <outlet property="delegate" destination="eEp-2K-tRx" id="oZs-v2-PLR"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="3y0-Bd-XKR"/>
+                    <navigationItem key="navigationItem" title="Posts" id="3y0-Bd-XKR"/>
                     <connections>
                         <outlet property="activityIndicator" destination="cJM-lz-Po5" id="FxR-4R-o4u"/>
                         <outlet property="activityView" destination="I37-bQ-b4v" id="JKc-9h-suf"/>
@@ -103,7 +103,7 @@
             </objects>
             <point key="canvasLocation" x="1306.4000000000001" y="-127.09359605911331"/>
         </scene>
-        <!--Add Post Table View Controller-->
+        <!--Create Post-->
         <scene sceneID="ue0-I2-CHd">
             <objects>
                 <tableViewController id="ofU-zp-R2w" customClass="AddPostTableViewController" customModule="Continuum" customModuleProvider="target" sceneMemberID="viewController">
@@ -196,7 +196,7 @@
                             <outlet property="delegate" destination="ofU-zp-R2w" id="yEO-C5-O4j"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="AWB-nq-gHK">
+                    <navigationItem key="navigationItem" title="Create Post" id="AWB-nq-gHK">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="MhE-Zb-WhX">
                             <connections>
                                 <action selector="cancelButtonTapped:" destination="ofU-zp-R2w" id="aCZ-q0-qUw"/>
@@ -331,7 +331,7 @@
         <scene sceneID="KV2-1q-Hm6">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nSb-jf-jU7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Feed" id="uv3-hZ-ghh"/>
+                    <tabBarItem key="tabBarItem" title="Feed" image="line.horizontal.3" catalog="system" id="uv3-hZ-ghh"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="XJ6-wT-cAM">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -350,7 +350,7 @@
         <scene sceneID="Vsk-jw-Q6n">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EcT-tC-zKN" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Create Post" id="8Sr-f5-hxd"/>
+                    <tabBarItem key="tabBarItem" title="Create Post" image="square.and.pencil" catalog="system" id="8Sr-f5-hxd"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="axO-TE-YTB">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -408,6 +408,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="line.horizontal.3" catalog="system" width="64" height="32"/>
         <image name="spaceEmptyState" width="1024" height="569"/>
+        <image name="square.and.pencil" catalog="system" width="64" height="58"/>
     </resources>
 </document>

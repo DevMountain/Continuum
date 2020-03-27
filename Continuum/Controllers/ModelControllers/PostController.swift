@@ -121,7 +121,7 @@ class PostController {
     //MARK: - CK Methods (Update)
     func incrementCommentCount(for post: Post, completion: ((Bool)-> Void)?){
         
-        post.commentCount += 1
+        post.commentCount = post.comments.count
         
         let modifyOperation = CKModifyRecordsOperation(recordsToSave: [CKRecord(post: post)], recordIDsToDelete: nil)
         
