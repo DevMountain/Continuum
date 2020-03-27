@@ -130,9 +130,9 @@ Add and implement the `PostController` class that will be used for CRUD operatio
 1. Add a new `PostController` class file.
 2. Add a `shared` singleton property.
 3. Add a `posts` property initialized as an empty array.
-4. Add an `addComment` function that takes a `text` parameter as a `String`,  a `Post` parameter, and a closure which takes in a `Comment` and returns Void.
+4. Add an `addComment` function that takes a `text` parameter as a `String`,  a `Post` parameter, and a closure which takes in a `Result<Comment, PostError>` and returns Void.
 * *For now this function will only initialize a new comment and append it to the given post's comments array. The completion will be used when CloudKit is implemented*
-5. Add a `createPostWith` function that takes an image parameter as a `UIImage`, a caption as a `String`, and a closure which takes in a `Post?` and returns `Void`.
+5. Add a `createPostWith` function that takes an image parameter as a `UIImage`, a caption as a `String`, and a closure which takes in a `Result<Post?, PostError>` and returns `Void`.
 6. The function will need to initialize a post from the image and new comment and append the post to the `PostController`s  `posts` property (think source of truth).  *The completion handler will be utilized with CloudKit integration*
 
 *Note: These CRUD functions will only work locally right now.  We will integrate Cloudkit further along in the project*
@@ -225,15 +225,14 @@ Add and implement search functionality to the search view. Implement the Image P
 Build functionality that will allow the user to search for posts with comments that have specific text in them. For example, if a user creates a `Post` with a photo of a waterfall, and there are comments that mention the waterfall, the user should be able to search the Timeline view for the term 'water' and filter down to that post (and any others with water in the comments).
 
 #### Update the Model
-Add a `SearchableRecord` protocol that requires a `matchesSearchTerm` function. Update the `Post` and `Comment` objects to conform to the protocol.
+Add a `SearchableRecord` protocol that requires a `matchesSearchTerm` function. Update the `Post`  object to conform to the protocol.
 
 1. Add a new `SearchableRecord.swift` file.
 2. Define a `SearchableRecord` protocol with a required `matches(searchTerm: String)` function that takes a `searchTerm` parameter as a `String` and returns a `Bool`.
 
-Consider how each model object will match to a specific search term. What searchable text is there on a `Comment`? What searchable text is there on a `Post`?
+Consider how each model object will match to a specific search term. What searchable text is there on a `Post`?
 
-3. Update the `Comment` class to conform to the `SearchableRecord` protocol. Return `true` if `text` contains the search term, otherwise return `false`.
-4. Update the `Post` class to conform to the `SearchableRecord` protocol. Return `true` if any of the `Post` `comments`  or its `caption` match the search term , otherwise return `false`.
+3. Update the `Post` class to conform to the `SearchableRecord` protocol. Return `true` if the `Post`  `caption` matches the search term , otherwise return `false`.
 
 You can use a Playground to test your `SearchableRecord` and `matches(searchTerm: String)` functionality and understand what you are implementing.
 
@@ -590,7 +589,7 @@ We're going to create a function that will allow us to fetch all the comments fo
 
 ### Fetching Data for the PostListTableViewController
 
-1. In the `PostListTableViewController` add a new function to request a full sync operation that takes in an optional completion closure. Implement the function by turning on the network activity indicator, calling the `fetchPosts` function on the `PostController`.  Reload the tableView and turn the network activity indicator off in the completion.
+1. In the `PostListTableViewController` add a new function to request a full sync operation that takes in an optional completion closure. Implement the function by calling the `fetchPosts` function on the `PostController`.  Reload the tableView in the completion.
 2. Call the function in the `viewDidLoad` to initiate a full sync when the user first opens the application.
 
 ### Restructuring the Post Model to Optimize Fetch Times
@@ -673,3 +672,6 @@ Update the Info.plist to declare backgrounding support for responding to remote 
 	* note: Use the `requestAuthorization` function that is a part of `UNUserNotificationCenter`.
 3. Register the App to receive push notifications `application.registerForRemoteNotifications()`
 
+
+### Black Diamond
+Add an activity indicator view that shows on screen while the fetch posts function is running and that is hidden once the posts have been fetched. 

@@ -21,9 +21,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>We use your camera to allow you to take and post pictures right in the app</string>
+	<string>Use your camera to take and upload pictures to the Continuum feed</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We acces your photos to allow you to select and upload pictures to the Continuum feed</string>
+	<string>Acces your photos to select and upload pictures to the Continuum feed</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

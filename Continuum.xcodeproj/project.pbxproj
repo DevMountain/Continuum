@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		558F1E64242BECBC0058752D /* PostError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558F1E63242BECBC0058752D /* PostError.swift */; };
+		97B7599E23EFBCD8005F6394 /* PhotoSelectorViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B7599D23EFBCD8005F6394 /* PhotoSelectorViewControllerDelegate.swift */; };
 		F70EAE2A221340D20096DB13 /* PostListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EAE29221340D20096DB13 /* PostListTableViewController.swift */; };
 		F70EAE2C221341BB0096DB13 /* PostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EAE2B221341BB0096DB13 /* PostDetailTableViewController.swift */; };
 		F70EAE2E2213422D0096DB13 /* AddPostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EAE2D2213422D0096DB13 /* AddPostTableViewController.swift */; };
@@ -17,7 +19,6 @@
 		F70EAE3D22137F2A0096DB13 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EAE3C22137F2A0096DB13 /* DateExtension.swift */; };
 		F72713E922249CC800A18484 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72713E822249CC800A18484 /* UIViewControllerExtension.swift */; };
 		F72713ED22249F4500A18484 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F72713EC22249F4500A18484 /* CloudKit.framework */; };
-		F7A9F3A4221B77D6009FE929 /* CKRecordExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A9F3A3221B77D6009FE929 /* CKRecordExtension.swift */; };
 		F7AC053E221737080002D7A6 /* SearchableRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC053D221737080002D7A6 /* SearchableRecord.swift */; };
 		F7AC0540221742410002D7A6 /* PhotoSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AC053F221742410002D7A6 /* PhotoSelectorViewController.swift */; };
 		F7F99C392211F96400D13C4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F99C382211F96400D13C4C /* AppDelegate.swift */; };
@@ -27,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		558F1E63242BECBC0058752D /* PostError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostError.swift; sourceTree = "<group>"; };
+		97B7599D23EFBCD8005F6394 /* PhotoSelectorViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorViewControllerDelegate.swift; sourceTree = "<group>"; };
 		F70EAE29221340D20096DB13 /* PostListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListTableViewController.swift; sourceTree = "<group>"; };
 		F70EAE2B221341BB0096DB13 /* PostDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewController.swift; sourceTree = "<group>"; };
 		F70EAE2D2213422D0096DB13 /* AddPostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostTableViewController.swift; sourceTree = "<group>"; };
@@ -38,7 +41,6 @@
 		F72713E822249CC800A18484 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		F72713EA22249F4300A18484 /* Continuum.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Continuum.entitlements; sourceTree = "<group>"; };
 		F72713EC22249F4500A18484 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		F7A9F3A3221B77D6009FE929 /* CKRecordExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKRecordExtension.swift; sourceTree = "<group>"; };
 		F7AC053D221737080002D7A6 /* SearchableRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableRecord.swift; sourceTree = "<group>"; };
 		F7AC053F221742410002D7A6 /* PhotoSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorViewController.swift; sourceTree = "<group>"; };
 		F7F99C352211F96400D13C4C /* Continuum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Continuum.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +63,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		97B7599A23EF1E57005F6394 /* Helper and Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F7AC053D221737080002D7A6 /* SearchableRecord.swift */,
+				F70EAE3C22137F2A0096DB13 /* DateExtension.swift */,
+				F72713E822249CC800A18484 /* UIViewControllerExtension.swift */,
+				97B7599D23EFBCD8005F6394 /* PhotoSelectorViewControllerDelegate.swift */,
+			);
+			path = "Helper and Extensions";
+			sourceTree = "<group>";
+		};
+		97B7599B23EF1E71005F6394 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				F70EAE3922134A670096DB13 /* PostTableViewCell.swift */,
+			);
+			path = "Custom Views";
+			sourceTree = "<group>";
+		};
+		97B7599C23EF1E8F005F6394 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F70EAE38221348710096DB13 /* ModelControllers */,
+				F70EAE2F221342940096DB13 /* ViewControllers */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		F70EAE2F221342940096DB13 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -75,14 +105,10 @@
 		F70EAE302213429C0096DB13 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F7AC053D221737080002D7A6 /* SearchableRecord.swift */,
 				F7F99C382211F96400D13C4C /* AppDelegate.swift */,
-				F7F99C3C2211F96400D13C4C /* Main.storyboard */,
 				F7F99C3F2211F96600D13C4C /* Assets.xcassets */,
 				F7F99C412211F96600D13C4C /* LaunchScreen.storyboard */,
 				F7F99C442211F96600D13C4C /* Info.plist */,
-				F70EAE3C22137F2A0096DB13 /* DateExtension.swift */,
-				F72713E822249CC800A18484 /* UIViewControllerExtension.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -92,7 +118,7 @@
 			children = (
 				F70EAE31221342A90096DB13 /* Post.swift */,
 				F70EAE332213455D0096DB13 /* Comment.swift */,
-				F7A9F3A3221B77D6009FE929 /* CKRecordExtension.swift */,
+				558F1E63242BECBC0058752D /* PostError.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -108,7 +134,8 @@
 		F70EAE3B22134A6D0096DB13 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F70EAE3922134A670096DB13 /* PostTableViewCell.swift */,
+				F7F99C3C2211F96400D13C4C /* Main.storyboard */,
+				97B7599B23EF1E71005F6394 /* Custom Views */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -142,11 +169,11 @@
 			isa = PBXGroup;
 			children = (
 				F72713EA22249F4300A18484 /* Continuum.entitlements */,
-				F70EAE302213429C0096DB13 /* Resources */,
-				F70EAE2F221342940096DB13 /* ViewControllers */,
 				F70EAE352213461A0096DB13 /* Models */,
-				F70EAE38221348710096DB13 /* ModelControllers */,
+				97B7599C23EF1E8F005F6394 /* Controllers */,
 				F70EAE3B22134A6D0096DB13 /* Views */,
+				97B7599A23EF1E57005F6394 /* Helper and Extensions */,
+				F70EAE302213429C0096DB13 /* Resources */,
 			);
 			path = Continuum;
 			sourceTree = "<group>";
@@ -179,10 +206,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
-				ORGANIZATIONNAME = trevorAdcock;
+				ORGANIZATIONNAME = "Max Poff";
 				TargetAttributes = {
 					F7F99C342211F96400D13C4C = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1130;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -233,9 +261,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7A9F3A4221B77D6009FE929 /* CKRecordExtension.swift in Sources */,
 				F7AC053E221737080002D7A6 /* SearchableRecord.swift in Sources */,
 				F7F99C392211F96400D13C4C /* AppDelegate.swift in Sources */,
+				97B7599E23EFBCD8005F6394 /* PhotoSelectorViewControllerDelegate.swift in Sources */,
 				F7AC0540221742410002D7A6 /* PhotoSelectorViewController.swift in Sources */,
 				F70EAE342213455D0096DB13 /* Comment.swift in Sources */,
 				F70EAE2A221340D20096DB13 /* PostListTableViewController.swift in Sources */,
@@ -245,6 +273,7 @@
 				F72713E922249CC800A18484 /* UIViewControllerExtension.swift in Sources */,
 				F70EAE372213462E0096DB13 /* PostController.swift in Sources */,
 				F70EAE2C221341BB0096DB13 /* PostDetailTableViewController.swift in Sources */,
+				558F1E64242BECBC0058752D /* PostError.swift in Sources */,
 				F70EAE32221342A90096DB13 /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,15 +422,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Continuum/Continuum.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 77U2457882;
-				INFOPLIST_FILE = "$(SRCROOT)/Continuum/Resources/Info.plist";
+				DEVELOPMENT_TEAM = V4L99CL288;
+				INFOPLIST_FILE = Continuum/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.trevoradcock.Continuum;
+				PRODUCT_BUNDLE_IDENTIFIER = "Max-Poff.Continuum";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -412,15 +441,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Continuum/Continuum.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 77U2457882;
-				INFOPLIST_FILE = "$(SRCROOT)/Continuum/Resources/Info.plist";
+				DEVELOPMENT_TEAM = V4L99CL288;
+				INFOPLIST_FILE = Continuum/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.trevoradcock.Continuum;
+				PRODUCT_BUNDLE_IDENTIFIER = "Max-Poff.Continuum";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7Sh-PB-2Iy">
-    <device id="retina5_9" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7Sh-PB-2Iy">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,12 +25,27 @@
                                 <string>Title</string>
                             </scopeButtonTitles>
                         </searchBar>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="I37-bQ-b4v">
+                            <rect key="frame" x="0.0" y="1064" width="375" height="65"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="cJM-lz-Po5">
+                                    <rect key="frame" x="177.66666666666666" y="22.666666666666671" width="20" height="20"/>
+                                    <color key="color" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </activityIndicatorView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstItem="cJM-lz-Po5" firstAttribute="centerX" secondItem="I37-bQ-b4v" secondAttribute="centerX" id="OLa-8x-MN4"/>
+                                <constraint firstItem="cJM-lz-Po5" firstAttribute="centerY" secondItem="I37-bQ-b4v" secondAttribute="centerY" id="vcB-qH-dUX"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="postCell" rowHeight="476" id="MBU-qa-atM" customClass="PostTableViewCell" customModule="Continuum" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="84" width="375" height="476"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MBU-qa-atM" id="urp-Ct-ksQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="475.66666666666669"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="476"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="XUX-Ae-1dY">
@@ -81,12 +94,14 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="3y0-Bd-XKR"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="cJM-lz-Po5" id="FxR-4R-o4u"/>
+                        <outlet property="activityView" destination="I37-bQ-b4v" id="JKc-9h-suf"/>
                         <outlet property="postSearchBar" destination="SZf-CS-H4l" id="fpB-EJ-jko"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bS6-5q-vCe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1307.2463768115942" y="-126.5625"/>
+            <point key="canvasLocation" x="1306.4000000000001" y="-127.09359605911331"/>
         </scene>
         <!--Add Post Table View Controller-->
         <scene sceneID="ue0-I2-CHd">
@@ -100,10 +115,10 @@
                             <tableViewSection headerTitle="Section-1" id="W0V-iK-fuz">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="269" id="SFj-8s-gXv">
-                                        <rect key="frame" x="0.0" y="55.333333333333343" width="375" height="269"/>
+                                        <rect key="frame" x="0.0" y="55.333332061767578" width="375" height="269"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SFj-8s-gXv" id="hpV-TT-cE6">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="268.66666666666669"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="269"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kBI-7a-BrI">
@@ -126,15 +141,14 @@
                             <tableViewSection headerTitle="Section-2" id="laY-ld-XJg">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="fVh-Dn-S2b">
-                                        <rect key="frame" x="0.0" y="380.33333333333331" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="380.33333206176758" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fVh-Dn-S2b" id="gf0-N9-5vE">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your clever comment here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rlk-7s-5UX">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
-                                                    <nil key="textColor"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -152,14 +166,14 @@
                             <tableViewSection headerTitle="Section-3" id="XQx-X7-has">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="yQO-dT-6qz">
-                                        <rect key="frame" x="0.0" y="480.33333333333331" width="375" height="43.999999999999943"/>
+                                        <rect key="frame" x="0.0" y="480.33333206176758" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yQO-dT-6qz" id="8aF-9r-NUB">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kUK-BT-1dp">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                                     <state key="normal" title="Add Post"/>
                                                     <connections>
                                                         <action selector="addPostButtonTapped:" destination="ofU-zp-R2w" eventType="touchUpInside" id="1Uc-Hs-4cb"/>
@@ -259,18 +273,18 @@
                                 <rect key="frame" x="0.0" y="361" width="375" height="61"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="plr-aV-ydt" id="hkn-Pn-JFN">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60.666666666666664"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="61"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HLT-Tl-TQ8">
-                                            <rect key="frame" x="16.000000000000004" y="9.9999999999999982" width="33.333333333333336" height="20.333333333333332"/>
+                                            <rect key="frame" x="16.000000000000004" y="10.999999999999998" width="33.333333333333336" height="20.333333333333332"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4nA-Fu-UvM">
-                                            <rect key="frame" x="15.999999999999996" y="33.333333333333329" width="43.666666666666664" height="14.333333333333334"/>
+                                            <rect key="frame" x="15.999999999999996" y="34.333333333333329" width="43.666666666666664" height="14.333333333333334"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
@@ -313,11 +327,11 @@
             </objects>
             <point key="canvasLocation" x="-809" y="281"/>
         </scene>
-        <!--Item-->
+        <!--Feed-->
         <scene sceneID="KV2-1q-Hm6">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nSb-jf-jU7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="uv3-hZ-ghh"/>
+                    <tabBarItem key="tabBarItem" title="Feed" id="uv3-hZ-ghh"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="XJ6-wT-cAM">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -332,11 +346,11 @@
             </objects>
             <point key="canvasLocation" x="368.80000000000001" y="-126.38680659670166"/>
         </scene>
-        <!--Item-->
+        <!--Create Post-->
         <scene sceneID="Vsk-jw-Q6n">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EcT-tC-zKN" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="8Sr-f5-hxd"/>
+                    <tabBarItem key="tabBarItem" title="Create Post" id="8Sr-f5-hxd"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="axO-TE-YTB">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -394,6 +408,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="spaceEmptyState" width="768" height="426.75"/>
+        <image name="spaceEmptyState" width="1024" height="569"/>
     </resources>
 </document>
