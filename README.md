@@ -277,7 +277,7 @@ Implement the Image Picker Controller in place of the prototype functionality yo
 2. Implement  `UIImagePickerController` to access the phones photo library or camera.  Check to make sure each `UIImagePickerController.SourceType` is available, and for each that is add the appropriate action to the `UIAlertController` above.
 3. Implement the `UIImagePickerControllerDelegate` function to capture the selected image and assign it to the image view.
 Please read through the documentation for [UIImagePickerController](https://developer.apple.com/documentation/uikit/uiimagepickercontroller) and its [delegate](https://developer.apple.com/documentation/uikit/uiimagepickercontrollerdelegate)
-* note: Be sure to add a `NSCameraUsageDescription`  and `NSPhotoLibraryUsageDescription` to your apps `Info.plist` . These strings will be displayed in the Alert Controller apple presents to ask users for specific permissions.
+* note: Be sure to add a `Privacy - CameraUsageDescription`  and `Privacy - PhotoLibraryUsageDescription` to your apps `Info.plist` . These strings will be displayed in the Alert Controller apple presents to ask users for specific permissions.
 
 You should now be able to select and initialize posts with the photos from your camera or photo library.  You will need to test the camera feature on an actual iPhone as the simulator does not support a camera.
 

@@ -177,7 +177,10 @@ class PostController {
         let notificationInfo = CKSubscription.NotificationInfo()
         notificationInfo.title = "New Comment"
         notificationInfo.alertBody = "A new comment was added to a post that you follow"
+        notificationInfo.soundName = "default"
+        notificationInfo.shouldSendContentAvailable = true
         notificationInfo.shouldBadge = true
+        notificationInfo.desiredKeys = [CommentConstants.textKey, CommentConstants.timestampKey]
         subscription.notificationInfo = notificationInfo
         
         publicDB.save(subscription) { (_, error) in
