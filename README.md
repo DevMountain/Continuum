@@ -53,11 +53,8 @@ Follow the development plan included with the project to build out the basic vie
 
 ### Getting Started
 1. Fork and Clone the starter project from the [Devmountain Github Project](https://github.com/DevMountain/Continuum)
-2. Create your own new local “starter” branch and pull the remote starter branch
-`git checkout -b starter`
-`git pull origin starter`
-3. Branch from starter to your own local develop branch you can begin to code on
-`git checkout -b develop`
+2. Switch over to the starter brach by typing `git checkout starter` into terminal.
+3. Now, branch from starter to your own local develop branch where you can begin your coding. To do this, type `git checkout -b develop` into terminal.
 
 ### View Hierarchy
 Implement the view hierarchy in Storyboards. The app will have a tab bar controller as the initial controller. The tab bar controller will have two tabs.
