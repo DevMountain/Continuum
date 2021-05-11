@@ -57,15 +57,16 @@ Follow the development plan included with the project to build out the basic vie
 3. Now, branch from starter to your own local develop branch where you can begin your coding. To do this, type `git checkout -b develop` into terminal.
 
 ### View Hierarchy
-Implement the view hierarchy in Storyboards. The app will have a tab bar controller as the initial controller. The tab bar controller will have two tabs.
+*In this section you will:*
+*Implement the view hierarchy in Storyboards. The app will have a tab bar controller as the initial controller. The tab bar controller will have two tabs.*
 
-The first is a navigation controller that has a PostListTableViewController that will display the list of posts, and will also use a UISearchBar to display search results. The PostListTableViewController will display a list of `Post` objects and segue to a `Post` detail view.
+*The first is a navigation controller that has a PostListTableViewController that will display the list of posts, and will also use a UISearchBar to display search results. The PostListTableViewController will display a list of `Post` objects and segue to a `Post` detail view.*
 
-The second tab is a separate navigation controller that will hold a view controller to add new posts.
+*The second tab is a separate navigation controller that will hold a view controller to add new posts.*
 
 1. Add a `UITabBarController` as the initial viewController of the storyboard.  Delete both of the view controller that are attached to the Tab Bar Controller when you drag it out.
 2. Add a `UITableViewController` Timeline scene, embed it in a `UINavigationController`, Make the navigation controller your first tab in the tab bar controller. (hint: control + drag from the tab bar controller to the navigation controller and select "view controllers" under the "Relationship Segue" section in the contextual menu)
-3. Make the `UITableViewController` from step 1 a `PostListTableViewController` Cocoa Touch file subclass of `UITableViewController` and assign the subclass to the storyboard scene
+3. Make the `UITableViewController` from step 2 a `PostListTableViewController` Cocoa Touch file subclass of `UITableViewController` and assign the subclass to the storyboard scene
 4. Add a `UITableViewController` Post Detail scene, add a segue to it from the prototype cell of `PostListTableViewController` scene
 5. Create a `PostDetailTableViewController` Cocoa Touch subclass of `UITableViewController` and assign it to the Post Detail scene
 6. Add a `UITableViewController` Add Post scene, embed it into a `UINavigationController`. Make this navigation controller your second tab in the tab bar controller.
@@ -78,14 +79,15 @@ Your Storyboard should be simple skeleton resembling the set up below:
 ### Implement Model
 Continuum will use a simple, non-persistent data model to locally represent data stored on CloudKit.
 
-Start by creating model objects. You will want to save `Post` objects that hold the image data, and `Comment` objects that hold text. A `Post` should own an array of `Comment` objects.
+*In this section you will:*
+*Start by creating model objects. You will want to save `Post` objects that hold the image data, and `Comment` objects that hold text. A `Post` should own an array of `Comment` objects.*
 
 #### Post
 Create a `Post` model object that will hold image data and comments.
 
 1. Add a new `Post` class to your project.
-2. Add a `photoData` property of type `Data?`, a `timestamp` `Date` property, a `caption` of type `String`, and a `comments` property of type `[Comment]`. *You will get a “undeclared type” error as we have not cerated the* `Comment` *model object. Ignore this for now*
-3. Add a computed property, `photo` with a getter which returns a `UIImage` initialized using the data in `photoData` and a setter which adjusts the value of the `photoData` property to match that of the `newValue` for UIImage.  *Notice, the initalizer for `UIImage(data: )` is failable and will return an optional UIImage and that `newValue.jpegData(compressionQuality: )` optional data.  You will need to handle these optionals by making `photoData` and `photo` optional properties.*
+2. Add a `photoData` property of type `Data?`, a `timestamp` `Date` property, a `caption` of type `String`, and a `comments` property of type `[Comment]`. *You will get a “undeclared type” error as we have not created the* `Comment` *model object. Ignore this for now*
+3. Add a computed property, `photo`, with a getter which returns a `UIImage` initialized using the data in `photoData` and a setter which adjusts the value of the `photoData` property to match that of the `newValue` for UIImage.  *Notice, the initalizer for `UIImage(data: )` is failable and will return an optional UIImage and that `newValue.jpegData(compressionQuality: )` optional data.  You will need to handle these optionals by making `photoData` and `photo` optional properties.*
 
 <details closed>
 	<summary><strong>Computed Photo Property</strong></summary>
@@ -107,81 +109,86 @@ var photo: UIImage?{
 
 <p></p>
 
-4. Add an initializer that accepts a photo, caption, timestamp,  and comments array. Provide a default values for the `timestamp` argument equal to the current date i.e. `Date()` and a default value for the `comments` of an empty array.
+4. Add an initializer that accepts a photo, caption, timestamp,  and comments array. Provide a default value for the `timestamp` argument equal to the current date i.e. `Date()` and a default value for the `comments` of an empty array.
 *Because* `photo` *is a computed property, you may get this error:*
 ![](README/Screen%20Shot%202019-02-12%20at%2011.15.35%20AM.png)
 *You can solve this by moving the initialization of* `photo` *i.e.* `self.photo = photo` *to the last line of the initalizer.*
 
 #### Comment
-Create a `Comment` model object that will hold user-submitted text comments for a specific `Post`.
+*In this section you will:*
+*Create a `Comment` model object that will hold user-submitted text comments for a specific `Post`.*
 
 1. Add a new `Comment` class to your project.
 2. Add a `text` property of type `String`, a `timestamp` `Date` property, and a weak `post` property of type `Post?`.
 * The comment objects reference to the post object should be weak in order to avoid retain cycles later on.
 `weak var post: Post?`
-3. Add an initializer that accepts text, timestamp, and a post. Provide a default values for the `timestamp` argument equal to the current date, so it can be omitted if desired.
+3. Add an initializer that accepts text, timestamp, and a post. Provide a default value for the `timestamp` argument equal to the current date, so it can be omitted if desired.
 
 ### Model Object Controller
-Add and implement the `PostController` class that will be used for CRUD operations.
+*In this section you will:*
+*Add and implement the `PostController` class that will be used for CRUD operations.*
 
 1. Add a new `PostController` class file.
 2. Add a `shared` singleton property.
-3. Add a `posts` property initialized as an empty array.
-4. Add an `addComment` function that takes a `text` parameter as a `String`,  a `Post` parameter, and a closure which takes in a `Result<Comment, PostError>` and returns Void.
+3. Add a `posts` Source of Truth property initialized as an empty array.
+4. Add an `addComment` function that takes a `text` parameter as a `String`,  a `Post` parameter, and a completion closure which takes in a `Result<Comment, PostError>` and returns Void.
 * *For now this function will only initialize a new comment and append it to the given post's comments array. The completion will be used when CloudKit is implemented*
-5. Add a `createPostWith` function that takes an image parameter as a `UIImage`, a caption as a `String`, and a closure which takes in a `Result<Post?, PostError>` and returns `Void`.
-6. The function will need to initialize a post from the image and new comment and append the post to the `PostController`s  `posts` property (think source of truth).  *The completion handler will be utilized with CloudKit integration*
+5. Add a `createPostWith` function that takes an image parameter as a `UIImage`, a caption as a `String`, and a completion closure which takes in a `Result<Post?, PostError>` and returns `Void`.
+6. The function will need to initialize a post from the image and caption and append the post to the `PostController`s  `posts` property (think source of truth).  *The completion handler will be utilized with CloudKit integration*
 
 *Note: These CRUD functions will only work locally right now.  We will integrate Cloudkit further along in the project*
 
 ### Wire Up Views
 
 #### Timeline Scene - Post List Table View Controller
-Implement the Post List Table View Controller. You will use a similar cell to display posts in multiple scenes in your application. Create a custom `PostTableViewCell` that can be reused in different scenes.
+*In this section you will:*
+*Implement the Post List Table View Controller. You will use a similar cell to display posts in multiple scenes in your application. Create a custom `PostTableViewCell` that can be reused in different scenes.*
 
 1. Implement the scene in Interface Builder by creating a custom cell with an image view that fills most of the cell, a label for the posts caption, and another label for displaying the number of comments a post has.  With the caption label selected, turn the number of lines down to 0 to enable this label to spread to the necessary number of text lines.  Constrain the UI elements appropriately.  Your `PostTableViewCell` should look similar to the one below.
 
 ![](README/storyboard2.png)
 
 
-2. Create a `PostTableViewCell` class, subclass the table view cell from the previous step in your storyboard and add the appropriate IBOutlets.
+2. Create a `PostTableViewCell` Cocoa Touch file, subclass the table view cell from the previous step in your storyboard and add the appropriate IBOutlets.
 3. In your `PostTableViewCell` add a `post` variable, and implement an `updateViews` function to the `PostTableViewCell` to update the image view with the post’s `photo`, and each of the labels with the relevant information from the post. Call the function in the didSet of the `post` variable
 4. Keeping with the aesthetic of our favorite original photo sharing application, give the imageView an aspect ratio of 1:1.  You will want to do this for all Post Image Views within the app to maintain consistency.  Place a sample photo in your storyboard and explore the options of `Aspect Fill`, `Aspect Fit` and `Scale to Fill`.  The master project will be using `Aspect Fill` with `Clips to Bounds` On.
-5. Implement the `UITableViewDataSource` functions for the `PostListTableVIewController`.  Use the source of truth from the `PostController` to populate the tableView.
+5. Implement the `UITableViewDataSource` functions for the `PostListTableViewController`.  Use the source of truth from the `PostController` to populate the tableView.
 6. Implement the `prepare(for segue: ...)` function to check the segue identifier, capture the detail view controller, index path, selected post, and assign the selected post to the detail view controller.
 	* note: You will need to add an optional  `post` property to the `PostDetailTableViewController`.
 
 #### Post Detail Scene
-Implement the Post Detail View Controller. This scene will be used for viewing post images and comments. Users will also have the option to add a comment, share the image, or follow the user that created the post.
+*In this section you will:*
+*Implement the Post Detail View Controller. This scene will be used for viewing post images and comments. Users will also have the option to add a comment, share the image, or follow the user that created the post.*
 
-Use the table view's header view to display the photo and a toolbar that allows the user to comment, share, or follow. Use the table view cells to display comments.
+*Use the table view's header view to display the photo and a toolbar that allows the user to comment, share, or follow. Use the table view cells to display comments.*
 
 1. Add a UIView to the header of the `PostDetailTableViewController`
-2. Add a vertical `UIStackView` to the Header of the table view. Add a `UIImageView` and a horizontal `UIStackView` to the stack view. Add 'Comment', 'Share', and 'Follow Post' `UIButtons`s to the horizontal stack view. Set the horizontal stack view to have a center alignment and Fill Equally distribution.  Set the Vertical Stack View to have Fill alignment and Fill distribution.
+2. Add a vertical `UIStackView` to the UIView in the Header of the table view. Add a `UIImageView` and a horizontal `UIStackView` to the stack view. Add 'Comment', 'Share', and 'Follow Post' `UIButtons` to the horizontal stack view. Set the horizontal stack view to have a center alignment and Fill Equally distribution.  Set the Vertical Stack View to have Fill alignment and Fill distribution.
 3. Constrain the image view to an aspect ratio of 1:1
-4. Constrain the vertical Stack View to be centered horizontally and vertically in the header view and equal to 80% of the height of the header view (i.e. the users screen width). 
-5. In  `PostDetailTableViewController.swift` create an IBOutlet from the Image View named `photoImageView` and connect IBActions from each button.
+4. Constrain the vertical Stack View to be centered horizontally and vertically in the header view and equal to 80% of the width of the header view (i.e. the users screen width). 
+5. In  `PostDetailTableViewController.swift` create an IBOutlet from the Image View named `photoImageView` and connect IBActions from each button in our horizontal stack view.
 6. The cells of this tableView should support comments that span multiple lines without truncating them and a timestamp for each comment. Set the `UITableViewCell` to the subtitle style. Set the number of lines for the cells title label to zero.
 7. Add an `updateViews` function that will update the scene with the details of the post. Implement the function by setting the `photoImageView.image` and reloading the table view.  Use a `didSet` on the `post` variable to call `updateViews`.
-8. Implement the `UITableViewDataSource` functions to populate the tableView with the post’s array of comments.
-9. In the IBAction for the 'Comment' button. Implement the IBAction by presenting a `UIAlertController` with a text field, a Cancel action, and an 'OK' action. Implement the 'OK' action to initialize a new `Comment` via the `PostController` and reload the table view to display it.  Leave the completion closure in the `addComment` function blank for now.
+8. Implement the `UITableViewDataSource` functions to populate the tableView with the post’s array of comments (post.comments).
+9. In the IBAction for the 'Comment' button, implement the IBAction by presenting a `UIAlertController` with a text field, a Cancel action, and an 'OK' action. Implement the 'OK' action to initialize a new `Comment` via the `PostController` and reload the table view to display it.  Leave the completion closure in the `addComment` function blank for now.
 	* note: Do not create a new `Comment` if the user has not added text.
 *Leave the Share and Follow button IBActions empty for now.  You will fill in implementations later in the project.*
 
 #### Add Post Scenes
-Implement the Add Post Table View Controller. You will use a static table view to create a simple form for adding a new post. Use three sections for the form:
+*In this section you will:*
+*Implement the Add Post Table View Controller. You will use a static table view to create a simple form for adding a new post. Use three sections for the form:*
 
-Section 1: Large button to select an image, and a `UIImageView` to display the selected image
+*Section 1: Large button to select an image, and a `UIImageView` to display the selected image
 Section 2: Caption text field
-Section 3: Add Post button
+Section 3: Add Post button*
 
-Until you implement the `UIImagePickerController`, you will use a staged static image to add new posts.
+*Until you implement the `UIImagePickerController`, you will use a staged static image to add new posts.*
 
-1. In the the attributes inspector of the `AddPostTableViewController`, assign the table view to use static cells. Adopt the 'Grouped' cell style. Add three sections.
-2. Build the first section by creating a tall image selection/preview cell. Add a 'Select Image' `UIButton` that fills the cell. Add an empty `UIImageView` that also fills the cell. Make sure that the button is on top of the image view so it can properly recognize tap events.
+1. In the attributes inspector of the `AddPostTableViewController`, assign the table view to use static cells. Adopt the 'Grouped' cell style. Add three sections.
+2. Build the first section by creating a tall image selection/preview cell. Add a 'Select Image' `UIButton` that fills the cell. Add an empty `UIImageView` that also fills the cell. Make sure that the button is on top of the image view so it can properly recognize tap events (lower in the list hierarchy on the left).
 3. Build the second section by adding a `UITextField` that fills the cell. Assign placeholder text so the user recognizes what the text field is for.
 4. Build the third section by adding a 'Add Post' `UIButton` that fills the cell.
-5. Add an IBAction and IBOutlet to the 'Select Image' `UIButton` that assigns a static image to the image view (use the empty state space drawing in Assets.xcassets from the starter project for prototyping this feature), and removes the title text from the button.
+5. Add an IBOutlet for your `UIImage`, and add an IBAction and IBOutlet to the 'Select Image' `UIButton` that assigns a static image to the image view (use the empty state space drawing in Assets.xcassets from the starter project for prototyping this feature), and removes the title text from the button.
 	* note: It is important to remove the title text so that the user no longer sees that a button is there, but do not remove the entire button, that way the user can tap again to select a different image (i.e. do not hide the button).
 6. Add an IBAction to the 'Add Post' `UIButton` that checks for an `image` and `caption`. If there is an `image` and a `caption`, use the `PostController` to create a new `Post`. Guard against either the image or a caption is missing.  Leave the completion closure in the `createPostWith` function empty for now.
 7. After creating the post, you will want to navigate the user back to `PostListTableViewController` of the application.  You will need to edit the Selected View Controller for your apps tab bar controller.  You can achieve this by setting the `selectedIndex` property on the tab bar controller.
@@ -202,7 +209,7 @@ Imagine a scenario where you have three classes with similar functionality. Each
 You will refactor the Photo Selection functionality (selecting and assigning an image) into a reusable child view controller in Part 2.
 
 ### Polish Rough Edges
-At this point you should be able view added post images in the Timeline Post List scene, add new `Post` objects from the Add Post Scene, add new `Comment` objects from the Post Detail Scene.  Your app will not persist or share data yet.
+At this point you should be able to view added post images in the Timeline Post List scene, add new `Post` objects from the Add Post Scene, and add new `Comment` objects from the Post Detail Scene.  Your app will not persist or share data yet.
 Use the app and polish any rough edges. Check table view cell selection. Check text fields. Check proper view hierarchy and navigation models.  You’re app should look similar to the screenshots below:
 
 ![](README/ContinuumPart1.png)
@@ -219,10 +226,12 @@ Use the app and polish any rough edges. Check table view cell selection. Check t
 Add and implement search functionality to the search view. Implement the Image Picker Controller on the Add Post scene.
 
 ### Search Controller
-Build functionality that will allow the user to search for posts with comments that have specific text in them. For example, if a user creates a `Post` with a photo of a waterfall, and there are comments that mention the waterfall, the user should be able to search the Timeline view for the term 'water' and filter down to that post (and any others with water in the comments).
+*In this section you will:*
+*Build functionality that will allow the user to search for posts with comments that have specific text in them. For example, if a user creates a `Post` with a photo of a waterfall, and there are comments that mention the waterfall, the user should be able to search the Timeline view for the term 'water' and filter down to that post (and any others with water in the comments).*
 
 #### Update the Model
-Add a `SearchableRecord` protocol that requires a `matchesSearchTerm` function. Update the `Post`  object to conform to the protocol.
+*In this section you will:*
+*Add a `SearchableRecord` protocol that requires a `matchesSearchTerm` function. Update the `Post`  object to conform to the protocol.*
 
 1. Add a new `SearchableRecord.swift` file.
 2. Define a `SearchableRecord` protocol with a required `matches(searchTerm: String)` function that takes a `searchTerm` parameter as a `String` and returns a `Bool`.
