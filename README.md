@@ -188,16 +188,17 @@ Section 3: Add Post button*
 2. Build the first section by creating a tall image selection/preview cell. Add a 'Select Image' `UIButton` that fills the cell. Add an empty `UIImageView` that also fills the cell. Make sure that the button is on top of the image view so it can properly recognize tap events (lower in the list hierarchy on the left).
 3. Build the second section by adding a `UITextField` that fills the cell. Assign placeholder text so the user recognizes what the text field is for.
 4. Build the third section by adding a 'Add Post' `UIButton` that fills the cell.
-5. Add an IBOutlet for your `UIImage`, and add an IBAction and IBOutlet to the 'Select Image' `UIButton` that assigns a static image to the image view (use the empty state space drawing in Assets.xcassets from the starter project for prototyping this feature), and removes the title text from the button.
+5. Add an IBOutlet for your `UITextField`.
+6. Add an IBOutlet for your `UIImage`, and add an IBAction and IBOutlet to the 'Select Image' `UIButton` that assigns a static image to the image view (use the empty state space drawing in Assets.xcassets from the starter project for prototyping this feature), and removes the title text from the button.
     * note: It is important to remove the title text so that the user no longer sees that a button is there, but do not remove the entire button, that way the user can tap again to select a different image (i.e. do not hide the button).
-6. Add an IBAction to the 'Add Post' `UIButton` that checks for an `image` and `caption`. If there is an `image` and a `caption`, use the `PostController` to create a new `Post`. Guard against either the image or a caption is missing.  Leave the completion closure in the `createPostWith` function empty for now.
-7. After creating the post, you will want to navigate the user back to `PostListTableViewController` of the application.  You will need to edit the Selected View Controller for your apps tab bar controller.  You can achieve this by setting the `selectedIndex` property on the tab bar controller.
+7. Add an IBAction to the 'Add Post' `UIButton` that checks for an `image` and `caption`. If there is an `image` and a `caption`, use the `PostController` to create a new `Post`. Guard against either the image or a caption is missing.  Leave the completion closure in the `createPostWith` function empty for now.
+8. After creating the post, you will want to navigate the user back to `PostListTableViewController` of the application.  You will need to edit the Selected View Controller for your apps tab bar controller.  You can achieve this by setting the `selectedIndex` property on the tab bar controller.
 
 `self.tabBarController?.selectedIndex = 0`
 
-8. Add a 'Cancel' `UIBarButtonItem` as the left bar button item. Implement the IBAction to bring the user back to the `PostListTableViewController` using the same line of code from the previous step.
-9. Override `ViewDidDisappear` to reset the Select Image Button's title back to "Select Image”, reset the imageView's image to nil, and remove the any text from the caption textField.
-10. Navigate back to the `PostListTableViewController` .  Override `viewWillAppear` to reload the tableView.
+9. Add a 'Cancel' `UIBarButtonItem` as the left bar button item. Implement the IBAction to bring the user back to the `PostListTableViewController` using the same line of code from the previous step.
+10. Override `ViewDidDisappear` to reset the Select Image Button's title back to "Select Image”, reset the imageView's image to nil, and remove the any text from the caption textField.
+11. Navigate back to the `PostListTableViewController` .  Override `viewWillAppear` to reload the tableView.
 
 #### A Note on Reusable Code
 Consider that this Photo Selection functionality could be useful in different views and in different applications. New developers will be tempted to copy and paste the functionality wherever it is needed. That amount of repetition should give you pause. *Don't repeat yourself* (DRY) is a shared value among skilled software developers.
