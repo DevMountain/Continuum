@@ -243,12 +243,13 @@ Consider how each model object will match to a specific search term. What search
 You can use a Playground to test your `SearchableRecord` and `matches(searchTerm: String)` functionality and understand what you are implementing.
 
 #### PostListTableViewController: UISearchBar & UISearchBarDelegate
-Use a UISearchbar to allow a user to search through different posts for the given search text.  This will require the use of the of the `SearchableRecord` protocol and the each models implentation of the `matches(searchTerm: String)` function.  The `PostListTableViewController` will need to conform to the `UISearchBarDelegate` and implement the appropriate delegate method.
+*In this section you will:*
+*Use a UISearchbar to allow a user to search through different posts for the given search text.  This will require the use of the of the `SearchableRecord` protocol and the Post model's implementation of the `matches(searchTerm: String)` function.  The `PostListTableViewController` will need to conform to the `UISearchBarDelegate` and implement the appropriate delegate method.*
 
 1. Add a `UISearchBar` to the headerView of the  `PostListTableViewController` scene in the main storyboard.  Check the `Shows Cancel Button` in the attributes inspector.  Create an IBOutlet from the search bar to the `PostListTableViewController` class.
-2. Add a `resultsArray` property in the `PostListTableViewController` class that contains an array of `Post`
+2. Add a `resultsArray` property in the `PostListTableViewController` class that contains an array of `SearchableRecord` set to an empty array
 3. Add an `isSearching` property at the top of the class which stores a `Bool` value set to `false` by default
-4. Created a computed property called `dataSource` as an array of `Post` Which will return the `resultsArray` if `isSearching` is `true` and the `PostController.shared.posts` if `isSearching` is `false`.
+4. Create a computed property called `dataSource` as an array of `SearchableRecord` which will return the `resultsArray` if `isSearching` is `true` and the `PostController.shared.posts` if `isSearching` is `false`.
 
 <details closed>
 	<summary><strong>var dataSource: [SearchableRecord]</strong></summary>
@@ -264,35 +265,45 @@ var dataSource: [SearchableRecord] {
 
 <p></p>
 
-6. Refactor the `UITableViewDataSource` methods to populate the tableView with the new `dataSource` property.
+6. Refactor the `UITableViewDataSource` methods to populate the tableView with the new `dataSource` property.  If you get any errors in your `cellForRowAt` about mismatching type, optionally cast your post as a Post (let post = dataSource[indexPath.row] as? Post). 
+    *(note: you will also have to update your `prepareForSegue` to use the `dataSouce` property as well)
 7. In `ViewWillAppear` set the results array equal to the `PostController.shared.posts`.
-8. Adopt the UISearchBarDelegate protocol in an extension on `PostListTableViewController`, and implement the `searchBar(_:textDidChange:)` function.  Within the function filter `PostController.shared.posts` using the `Post` object's  `matches(searchTerm: String)` function and setting the `resultsArray` equal to the results of the filter.  Call `tableView.reloadData()` at the end of this function.
-9. Implement the `searchBarCancelButtonClicked(_ searchBar:)`  function, using it to set the results array equal to `PostController.shared.posts` then reload the table view.  You should also set the searchBar's text equal to an empty String and resign its first responder.  This will return the feed back to its normal state of displaying all posts when the user cancels a search.
-10. Implement the `searchBarTextDidBeginEditing` and set `isSearching` to `true`.
-11. Implement the `searchBarTextDidEndEditing` and set `isSearching` to `false`.
-12. In `ViewDidLoad` set the Search Bar's delegate property equal to `self`
+8. Adopt the UISearchBarDelegate protocol in an extension on `PostListTableViewController`, and implement the `searchBar(_:textDidChange:)` function.  Within the function, using the .filter method, filter `PostController.shared.posts` using the `Post` object's  `matches(searchTerm: String)` function and setting the `resultsArray` equal to the results of the filter.  Call `tableView.reloadData()` at the end of this function.
+9. Now if you notice, if you search for something, but then delete all text in the searchBar, our tableView is empty.  Create an if-else statement that will check if searchText is not empty.  Move the code we used to filter in the case that searchText is not empty.  Otherwise, set `resultsArray` equal to `PostController.shared.posts` then reload the tableView.  
+10. Implement the `searchBarCancelButtonClicked(_ searchBar:)`  function, using it to set the results array equal to `PostController.shared.posts` then reload the table view.  You should also set the searchBar's text equal to an empty String and resign its first responder.  This will return the feed back to its normal state of displaying all posts when the user cancels a search.
+11. Implement the `searchBarSearchButtonClicked` and resign the searchBar's first responder.
+12. Implement the `searchBarTextDidBeginEditing` and set `isSearching` to `true`.
+13. Implement the `searchBarTextDidEndEditing`, set `isSearching` to `false`, and set the text in the search bar to an empty string.
+14. In `ViewDidLoad` set the Search Bar's delegate property equal to `self`
 
 Add Several Posts with a variety of captions and comments.  Test whether you can successfully search the posts using the search bar.
 
 ### Image Picker Controller
 
 #### Photo Select Child Scene
-Implement the Image Picker Controller in place of the prototype functionality you built previously.
+*In this section you will:*
+*Implement the Image Picker Controller in place of the prototype functionality you built previously.*
 
-1. In the` AddPostTableViewController`, update the 'Select Image' IBAction to present an `UIAlertController` with an `actionSheet` style which will allow the user to select from picking an image in their photo library or directly from their camera.
-2. Implement  `UIImagePickerController` to access the phones photo library or camera.  Check to make sure each `UIImagePickerController.SourceType` is available, and for each that is add the appropriate action to the `UIAlertController` above.
-3. Implement the `UIImagePickerControllerDelegate` function to capture the selected image and assign it to the image view.
+1. In the` AddPostTableViewController`, create a function called `presentImagePickerActionSheet` which we will call in the 'Select Image' IBAction. 
+2.  In the body of the function, we will need to create an instance of `UIImagePickerController`.  (let imagePickerController = UIImagePickerController()).
+3.  Assign `imagePickerController`'s delegate to self.  
+4.  Create a `UIAlertController` with an `actionSheet` style which will allow the user to select from picking an image in their photo library or directly from their camera.
+5. Use  `UIImagePickerController` to check to make sure each `UIImagePickerController.SourceType` is available, and for each that is, add the appropriate action to the `UIAlertController` above.
+6. You will also need to add a cancelAction and present the alert to the user.  
+7. In an extension, conform the `AddPostTableViewController` to `UIImagePickerControllerDelegate` and  `UINavigationControllerDelegate` (these can be on the same line).
+8. Implement the `UIImagePickerControllerDelegate` function `didFinishPickingMediaWithInfo` to capture the selected image and assign it to the image view. You will also set the text on the 'Select Image' button to an empty string.
 Please read through the documentation for [UIImagePickerController](https://developer.apple.com/documentation/uikit/uiimagepickercontroller) and its [delegate](https://developer.apple.com/documentation/uikit/uiimagepickercontrollerdelegate)
 * note: Be sure to add a `Privacy - CameraUsageDescription`  and `Privacy - PhotoLibraryUsageDescription` to your apps `Info.plist` . These strings will be displayed in the Alert Controller apple presents to ask users for specific permissions.
 
 You should now be able to select and initialize posts with the photos from your camera or photo library.  You will need to test the camera feature on an actual iPhone as the simulator does not support a camera.
 
 ### Reduce Code Repetition
-Refactor the photo selection functionality from the Add Post scene into a child view controller.
+*In this section you will:*
+*Refactor the photo selection functionality from the Add Post scene into a child view controller.*
 
-Child view controllers control views that are a subview of another view controller. It is a great way to encapsulate functionality into one class that can be reused in multiple places. This is a great tool for any time you want a similar view to be present in multiple places.
+*Child view controllers control views that are a subview of another view controller. It is a great way to encapsulate functionality into one class that can be reused in multiple places. This is a great tool for any time you want a similar view to be present in multiple places.*
 
-In this instance, you will put 'Select Photo' button, the image view, and the code that presents and handles the `UIImagePickerController` into a `PhotoSelectorViewController` class. You will also define a protocol for the `PhotoSelectorViewController` class to communicate with it's parent view controller.
+*In this instance, you will put 'Select Photo' button, the image view, and the code that presents and handles the `UIImagePickerController` into a `PhotoSelectorViewController` class. You will also define a protocol for the `PhotoSelectorViewController` class to communicate with it's parent view controller.*
 
 #### Container View and Embed Segues
 Use a container view to embed a child view controller into the Add Post scene.
@@ -300,25 +311,29 @@ Use a container view to embed a child view controller into the Add Post scene.
 > A Container View defines a region within a view controller's view subgraph that can include a child view controller. Create an embed segue from the container view to the child view controller in the storyboard.  
 
 1. Open `Main.storyboard` to your Add Post scene.
-2. Add a new section to the static table view to build the Container View to embed the child view controller.
-3. Search for Container View in the Object Library and add it to the newly created table view cell.
+2. Search for Container View in the Object Library and add it to the cell in your table view that contains the imageView and 'Select Photo' button.
 	* note: The Container View object will come with a view controller scene. You can use the included scene, or replace it with another scene. For now, use the included scene.
-4. Set up constraints so that the Container View fills the entire cell.
-5. Move or copy the Image View and 'Select Photo' button to the container view controller.
+3. Set up constraints so that the Container View fills the entire cell.
+4. Move or copy the Image View and 'Select Photo' button to the container view controller.
+5. Be sure to constrain the imageView and 'Select Photo' button to fill the container view.
 6. Create a new `PhotoSelectorViewController` file as a subclass of `UIViewController` and assign the class to the new embedded scene in Interface Builder.
-7. Create the necessary IBOutlets and IBActions, and migrate your Photo Picker code from the Add Post view controller class. Delete the old code from the Add Post view controller class.  Check for any broken or duplicate outlets in your Interface Builder scenes.
+7. Create the necessary IBOutlets and IBActions, and migrate your Photo Picker code from the Add Post view controller class. Delete the old code from the Add Post view controller class.  Check for any broken or duplicate outlets in your Interface Builder scenes.  
+8. Our `PhotoSelectorViewController` will also need a viewDidDisappear function.  Migrate code from our `AddPostTableViewController` that references our 'Select Button' and imageView over to our `PhotoSelectorViewController` (resetting the caption textfield will still need to remain in our `AddPostTableViewController`'s viewDidDisappear )
+    *note: you will have errors on your `AddPostTableViewController` page since you are referencing outlets that no longer exist. We will fix these errors soon.  Feel free to ignore those for now or comment out the code for the time being
 
 You now have a container view which can be referenced and reused throughout your app.  In this version of the app, we will only use the scene once, but the principle remains.
 
 #### Child View Controller Delegate
-Your child view controller needs a way to communicate events to it's parent view controller. This is most commonly done through delegation. Define a child view controller delegate, adopt it in the parent view controller, and set up the relationship via the embed segue.
+*In this section:*
+*Your child view controller needs a way to communicate events to it's parent view controller. This is most commonly done through delegation. Define a child view controller delegate, adopt it in the parent view controller, and set up the relationship via the embed segue.*
 
 1. Define a new `PhotoSelectorViewControllerDelegate` protocol in the `PhotoSelectorViewController` file with a required `photoSelectorViewControllerSelected(image: UIImage)` function that takes a `UIImage` parameter to pass the image that was selected.
 	* note: This function will tell the assigned delegate (the parent view controller, in this example) what image the user selected.
 2. Add a weak optional delegate property to the `PhotoSelectorViewController`.
 3. Call the delegate function in the `didFinishPickingMediaWithInfo` function, passing the selected media to the delegate.
-4. Adopt the `PhotoSelectViewControllerDelegate` protocol in the `AddPostTableViewController`, implement the `photoSelectViewControllerSelectedImage` function to capture a reference to the selected image.
-	* note: In the `AddPostTableViewController` scene, you will use that captured reference to create a new post.
+4. In the `AddPostTableViewController`, create a new property called `selectedImage` of type optional `UIImage`
+5. Adopt the `PhotoSelectViewControllerDelegate` protocol in the `AddPostTableViewController` and implement the `photoSelectViewControllerSelectedImage` function to assign the selected image to the newly created `selectedImage` property.
+6.  In the `AddPostTableViewController` scene, clean up any errors you have by using `selectedImage` to create a new post.  
 
 Note the use of the delegate pattern. You have encapsulated the Photo Selection workflow in one class, but by implementing the delegate pattern,  each parent view controller can implement its own response to when a photo was selected.
 
@@ -328,7 +343,8 @@ You have declared a protocol, adopted the protocol, but you now must assign the 
 2. Implement the `prepare(forSegue: ...)` function in the `AddPostTableViewController` to check for the segue identifier, capture the `destinationViewController` as a `PhotoSelectorViewController`, and assign `self` as the child view controller's delegate.
 
 ### Post Detail View Controller Share Sheet
-Use the `UIActivityController` class to present a share sheet from the Post Detail view. Share the image and the text of the first comment.
+*In this section you will:* 
+*Use the `UIActivityController` class to present a share sheet from the Post Detail view. Share the image and the text of the first comment.*
 
 1. Add an IBAction from the Share button in your `PostDetailTableViewController` if you have not already.
 2. Initialize a `UIActivityViewController` with the `Post`'s image and the caption as the shareable objects.

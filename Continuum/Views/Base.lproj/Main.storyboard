@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7Sh-PB-2Iy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7Sh-PB-2Iy">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -26,15 +27,15 @@
                             </scopeButtonTitles>
                         </searchBar>
                         <view key="tableFooterView" contentMode="scaleToFill" id="I37-bQ-b4v">
-                            <rect key="frame" x="0.0" y="1064" width="375" height="65"/>
+                            <rect key="frame" x="0.0" y="1191" width="375" height="65"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="cJM-lz-Po5">
                                     <rect key="frame" x="177.66666666666666" y="22.666666666666671" width="20" height="20"/>
-                                    <color key="color" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="color" systemColor="systemBlueColor"/>
                                 </activityIndicatorView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="cJM-lz-Po5" firstAttribute="centerX" secondItem="I37-bQ-b4v" secondAttribute="centerX" id="OLa-8x-MN4"/>
                                 <constraint firstItem="cJM-lz-Po5" firstAttribute="centerY" secondItem="I37-bQ-b4v" secondAttribute="centerY" id="vcB-qH-dUX"/>
@@ -110,7 +111,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="X9H-Xn-AfC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <sections>
                             <tableViewSection headerTitle="Section-1" id="W0V-iK-fuz">
                                 <cells>
@@ -172,7 +173,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kUK-BT-1dp">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kUK-BT-1dp">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                                     <state key="normal" title="Add Post"/>
                                                     <connections>
@@ -235,21 +236,21 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Xcy-sI-2ha">
                                             <rect key="frame" x="0.0" y="278" width="262" height="38.333333333333314"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SSo-s1-2bt" userLabel="Comment">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SSo-s1-2bt" userLabel="Comment">
                                                     <rect key="frame" x="0.0" y="4.3333333333333712" width="94.333333333333329" height="30"/>
                                                     <state key="normal" title="Comment"/>
                                                     <connections>
                                                         <action selector="commentButtonTapped:" destination="Kp2-JW-j59" eventType="touchUpInside" id="ptm-Nx-8X2"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8m-jD-ojh">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8m-jD-ojh">
                                                     <rect key="frame" x="94.333333333333343" y="4.3333333333333712" width="56.333333333333343" height="30"/>
                                                     <state key="normal" title="Share"/>
                                                     <connections>
                                                         <action selector="shareButtonTapped:" destination="Kp2-JW-j59" eventType="touchUpInside" id="K1D-UZ-J3E"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ow4-7N-Oeu">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ow4-7N-Oeu">
                                                     <rect key="frame" x="150.66666666666669" y="4.3333333333333712" width="111.33333333333331" height="30"/>
                                                     <state key="normal" title="Follow Post"/>
                                                     <connections>
@@ -277,7 +278,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HLT-Tl-TQ8">
-                                            <rect key="frame" x="16.000000000000004" y="10.999999999999998" width="33.333333333333336" height="20.333333333333332"/>
+                                            <rect key="frame" x="16" y="10.999999999999998" width="33" height="20.333333333333332"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -376,7 +377,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o8L-zr-waU">
                                 <rect key="frame" x="0.0" y="0.0" width="343" height="247"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhJ-qM-rH6">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhJ-qM-rH6">
                                 <rect key="frame" x="0.0" y="0.0" width="343" height="247"/>
                                 <state key="normal" title="Select Photo"/>
                                 <connections>
@@ -384,6 +385,7 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="l2m-Na-tJD"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="o8L-zr-waU" secondAttribute="trailing" id="1Fx-wm-LXT"/>
@@ -395,7 +397,6 @@
                             <constraint firstItem="yhJ-qM-rH6" firstAttribute="top" secondItem="HfP-Fj-hgC" secondAttribute="top" id="scy-2P-NtC"/>
                             <constraint firstAttribute="bottom" secondItem="o8L-zr-waU" secondAttribute="bottom" id="utM-K1-LWU"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="l2m-Na-tJD"/>
                     </view>
                     <connections>
                         <outlet property="photoImageView" destination="o8L-zr-waU" id="xHf-BY-vAq"/>
@@ -408,8 +409,17 @@
         </scene>
     </scenes>
     <resources>
-        <image name="line.horizontal.3" catalog="system" width="64" height="32"/>
+        <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
         <image name="spaceEmptyState" width="1024" height="569"/>
-        <image name="square.and.pencil" catalog="system" width="64" height="58"/>
+        <image name="square.and.pencil" catalog="system" width="128" height="115"/>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
