@@ -82,7 +82,7 @@ extension Post {
                 let data = try Data(contentsOf: url)
                 postPhoto = UIImage(data: data)
             } catch {
-                print("Could not transfrom asset to data.")
+                print("Could not transform asset to data.")
             }
         }
         self.init(photo: postPhoto, caption: caption, timestamp: timestamp, comments: [], recordID: ckRecord.recordID, commentCount: commentCount)

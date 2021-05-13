@@ -400,7 +400,7 @@ The whole point of the above computed property is to read and write for our phot
 3. We will need a way of converting local `Post` objects into a type which can be saved to CloudKit (i.e. CKRecords).  To achieve this, we will extend CloudKit’s `CKRecord` class and add a  convenience initializer which takes in a single `Post` instance.
     * Initialize a `CKRecord` with recordType of “Post” and recordID of the post’s recordID property.
     * Set the values of the CKRecord with the post’s properties.  CloudKit only supports saving Foundational Types (save dictionaries) and will not allow saving `UIImage` or `Comment` instances.  We will therefore need to save a `CKAsset` instead of an image.  We will ignore comments for now, and come back to them using a process called back referencing.
-    * *Note: Setting the values of this glorified dictionary will require many     hardcoded string which can lead to typo errors especially in larger projects.  Consider creating a constants struct to hold each of these string values.*
+    * *Note: Setting the values of this glorified dictionary will require many     hardcoded strings which can lead to typo errors especially in larger projects.  Consider creating a constants struct to hold each of these string values.*
     
 <details closed>
     <summary><strong>CKRecord Extension</strong></summary>
@@ -408,11 +408,16 @@ The whole point of the above computed property is to read and write for our phot
     
 ```swift
 extension CKRecord {
-  convenience init?(post: Post) {
+  convenience init(post: Post) {
     self.init(recordType: PostConstants.typeKey, recordID: post.recordID)
-    self.setValue(post.caption, forKey: PostConstants.captionKey)
-    self.setValue(post.timestamp, forKey: PostConstants.timestampKey)
-    self.setValue(post.imageAsset, forKey: PostConstants.photoKey)
+    self.setValuesForKeys([
+        PostConstants.captionKey : post.caption,
+        PostConstants.timestampKey : post.timestamp
+    ])
+    
+    if let postPhoto = post.imageAsset {
+        self.setValue(postPhoto, forKey: PostConstants.photoKey)
+    }
   }
 }
 ```
@@ -436,11 +441,12 @@ struct PostConstants {
     * You will need to first get the CKAsset back from the CKRecord then use its `fileURL` property to initialize `Data`
     * Remember to initialize the posts recordID property with the ckRecord’s recordID.
     * We will initialize comments with an empty array for now.
-    * *Note: The strings you use to pull values out of the CKRecord will need to exactly match their respective strings in your CKRecord convenience initializer.  If you failed to implement in constant struct in the previous step, please reconsider your decision, and use that same constant struct here*  
+    * *Note: The strings you use to pull values out of the CKRecord will need to exactly match their respective strings in your CKRecord convenience initializer.  If you failed to implement a constants struct in the previous step, please reconsider your decision, and use that same constants struct here*  
 
 ### Update Comment for CloudKit Functionality
-Make the same structural adjustments for you Comment model object to integrate it with CloudKit.  
-Extend CKRecord to add a convenience initializer which takes in a Comment.    Write a failable initializer for your Comment which takes in  a CKRecord.
+*In this section you will:* 
+*Make the same structural adjustments for you Comment model object to integrate it with CloudKit.  
+Extend CKRecord to add a convenience initializer which takes in a Comment.    Write a failable initializer for your Comment which takes in  a CKRecord.*
 
 1. Add A CKRecord.ID property to the ‘Comment’ model.
 2. Adjust your designated initializer to take in a CKRecord.ID with a default initializer value of a new CKRecord.ID initialized with the name of a new, unique uuid.
@@ -453,7 +459,7 @@ You will likely run into some issues as you try to save the comment’s post pro
 
 CloudKit contains a special class for creating references like this called `CKRecord.Reference`.  Please read through the documentation for `CKRecord.Reference` [here](https://developer.apple.com/documentation/cloudkit/ckrecord/reference) . Using a `CKRecord.Reference`  is preferable to just saving the post’s recordID as a string because CloudKit will then handle writing operations for us on the relationship.  For example, if I delete a post, a `CKRecord.Reference` may allow CloudKit to automatically delete all of its  associated comments.  
 
-5. Add a computed property of types `CKRecord.Reference?` to the comment class.  This should return a new `CKRecord.Reference` using the comment’s post object
+5. Add a computed property of type `CKRecord.Reference?` to the comment class.  This should return a new `CKRecord.Reference` using the comment’s post object
 
 <details closed>
 <summary><strong>var postReference: CKRecord.Reference</strong></summary>
@@ -480,7 +486,7 @@ If the user isn't signed into their iCloud account, they will not be able to sav
 * The `default()` Singleton of the  `CKContainer` class has an `accountStatus` function that can check the users status. There are 4 options, for `CKAccountStatus` which you can read about [here](https://developer.apple.com/documentation/cloudkit/ckaccountstatus). 
 2. In the completion of  `CKContainer.default().accountStatus`, write a switch statement based on the users status inside the closure where you can handle each case as necessary.  You will need a `@escaping` completion closure to handle the events if the user is signed in or not.  If the users account status is anything other than `.available`  we’ll need to call the completion passing in `false` and present an alert to notify the user that they are not signed in. 
 *Note: In this case you will not use the completion of this function for anything more than a print statement; however, it is good practice to include an escaping completion for any function which makes asynchronous calls in order to give yourself or other developer using your code the opportunity to run code when the call has completed.*
-    * Create an extension on UIView controller and add a function `presentSimpleAlertWith(title: String, message: String?)`. You'll call this function within your `checkAccountStatus(completion: @escaping (Bool) -> Void)` Based on the users status you'll provide the proper Error Message to inform the user.  *If you already completed the Black Diamond from Part 1 you will already have the code for this.*
+    * Create an extension on UIView controller and add a function `presentSimpleAlertWith(title: String, message: String?)` that presents an alert with the passed in title and message and only has an OK button. You'll call this function within your `checkAccountStatus(completion: @escaping (Bool) -> Void)` Based on the users status you'll provide the proper Error Message to inform the user.  *If you already completed the Black Diamond from Part 1 you will already have the code for this.*
 
     If you attempt to present an alert in this class, you'll notice an error. That's because `AppDelegate` isn't a subclass of `UIViewController` nor should it be. We don't have access to any `UIViewController` yet. 
 
@@ -542,6 +548,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <div></div>
 <p>*(In a Separate File)*</p>
 <div></div>
+
 ```swift
 extension UIViewController {
   func presentSimpleAlertWith(title: String, message: String?) {
@@ -553,13 +560,16 @@ extension UIViewController {
 }
 ```
 
+
+
 </details>
 
 <div></div>
 
 ## Update the Post Controller for CloudKit functionality
 #### Saving Records
-Update the `PostController` to support pushing and pulling data from CloudKit.
+*In this section you will:* 
+*Update the `PostController` to support pushing and pulling data from CloudKit.*
 
 In order to enable the sharing functionality of this application, we will need to save Post and Comment Records to CloudKit’s public database.
 `let publicDB = CKContainer.default().publicCloudDatabase`
@@ -568,7 +578,7 @@ In order to enable the sharing functionality of this application, we will need t
 
 2.  Use CloudKit’s `save(_:completionHandler:)` function which you can read more about [here](https://developer.apple.com/documentation/cloudkit/ckdatabase/1449114-save).  You will need to handle any errors and call the completion on your `createPostWith(photo:caption:completion:)` function inside the completionHandler of the save function.
 
-At this point you should be able to save a post record and see it in your CloudKit dashboard. You dashboard should look similar to this.
+At this point you should be able to save a post record and see it in your CloudKit dashboard. You dashboard should look similar to this (after marking the recordName as queryable)
 ![](README/dashboard.png)
 
 2. Update the `addCommentToPost` function to to create a `CKRecord` using the convenience initializer which takes in a comment on  `CKRecord`.  
@@ -582,7 +592,7 @@ There are a number of approaches you could take to fetching new records. For Con
 
 ##### Fetching Posts
 
-1. Add a `fetchPosts` function that has a completion closure which takes in an array of optional `[Post]?` 's and returns `Void`.
+1. Add a `fetchPosts` function that has a completion closure which takes in an array of optional posts `[Post]?` and returns `Void`.
 2. Use the `publicDB`  property to [perform a query.](https://developer.apple.com/documentation/cloudkit/ckdatabase/1449127-perform) 
 3. We will need to make a `CKQuery` and a `NSPredicate`. The predicate value will be set to true which means it will fetch every post.
 4. Handle any errors that may have been passed back, unwrap the records, and `compactMap` across the array of records calling your failable initializer  `init?(record: CKRecord)` on each one.  This will return a new array of posts fetched from our publicDB.
@@ -617,7 +627,7 @@ We're going to create a function that will allow us to fetch all the comments fo
 ### Restructuring the Post Model to Optimize Fetch Times
 You may have noticed that it takes a long time to fetch the results from CloudKit.  Moreover, there is a major bug.  Post objects, when they are initially fetched from CloudKit will display a comment count of 0 in the PostListTableViewController.  In order to display these with our current app structure, we would need to fetch all of the post, then for each post, go fetch all of its comments.  This is a heavy ask for CloudKit and could hang out UI fairly quickly.  Meanwhile we don’t even need the data for those comments until a user clicks into the detail view for post.  We will need to refactor our `Post` model to keep track of how many comments it has, and delay the fetching of comments until a user click on the detail page for a post.
 
-1. Add a commentCount variable to the `Post` class
+1. Add a commentCount variable of type `Int` to the `Post` class
 2. Adjust the `Post` initializers and the convenience  initializer on CKRecord which takes in a post. 
 3. Add functionality to the `PostController`’s `addComment` function to increment the post’s commentCount by 1.  Make sure you update the value of this integer in CloudKit.  You will need to use the [CKModifyRecordsOperation](https://developer.apple.com/documentation/cloudkit/ckmodifyrecordsoperation/1447486-modifyrecordscompletionblock) class to do this.
 4. Adjust the `PostTableViewCell` to populate the comment count label with this new property.
@@ -638,26 +648,30 @@ When you tap on a post cell it should bring you to the detailVC. The comments th
 ## Part Four - Intermediate CloudKit: Subscriptions, Push Notifications
 * Use subscriptions to generate push notifications
 
-Implement Subscriptions and push notifications to create a simple automatic sync engine. Add support for subscribing to new `Post` records and for subscribing to new `Comment` records on followed `Posts`s. Request permission for remote notifications. Respond to remote notifications by initializing the new `Post` or `Comment` with the new data.
+*In this section you will:* 
+*Implement Subscriptions and push notifications to create a simple automatic sync engine. Add support for subscribing to new `Post` records and for subscribing to new `Comment` records on followed `Post`s. Request permission for remote notifications. Respond to remote notifications by initializing the new `Post` or `Comment` with the new data.*
 
-When you finish this part, the app will support sending push notification when new records are created in CloudKit. 
+*When you finish this part, the app will support sending push notification when new records are created in CloudKit. *
 
 ### PostController Subscription Based Sync
-Update the `PostController` class to manage subscriptions for new posts and new comments on followed posts. Add functions for following and unfollowing individual posts.
+*You will:* 
+*Update the `PostController` class to manage subscriptions for new posts and new comments on followed posts. Add functions for following and unfollowing individual posts.*
 
-When a user follows a `Post`, he or she will receive a push notification and automatic sync for new `Comment` records added to the followed `Post`.
+*When a user follows a `Post`, he or she will receive a push notification and automatic sync for new `Comment` records added to the followed `Post`.*
 
 #### Subscribe to New Posts
-Create and save a subscription for all new `Post` records.
+*You will:* 
+*Create and save a subscription for all new `Post` records.*
 
 1. Add a function `subscribeToNewPosts` that takes an optional completion closure with  `Bool` and `Error?` parameters.
     * note: Use an identifier that describes that this subscription is for all posts.
-2. Initialize a new CKQuerySubscription for the `recordType` of 'Post'.  Pass in a predicate object with it value set to `true`.
+2. Initialize a new CKQuerySubscription for the `recordType` of 'Post'.  Pass in a predicate object with its value set to `true`.
 3. Save the subscription to the public database.  Handle any error which may be passed out of the completion handler and complete with true or false based on whether or not an error occurred while saving.
-4. Call the `subscribeToNewPosts` in the initializer for the `PostController` so that each user is subscribed to new `Post` records saved to CloudKit.
+4. Call the `subscribeToNewPosts` in the initializer for the `PostController` (you will have to add this) so that each user is subscribed to new `Post` records saved to CloudKit.
 
 #### Subscribe to New Comments
-Create and save a subscription for all new `Comment` records that point to a given `Post`
+*You will:* 
+*Create and save a subscription for all new `Comment` records that point to a given `Post`*
 
 1. Add a function `addSubscriptionTo(commentsForPost post: ...)` that takes a `Post` parameter and an optional completion closure which takes in a `Bool` and `Error` parameters.
 2. Initialize a new NSPredicate formatted to search for all post references equal to the `recordID` property on the `Post` parameter from the function.
@@ -667,7 +681,8 @@ Create and save a subscription for all new `Comment` records that point to a giv
 * Please see the [CloudKit Programming Guide](https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitQuickStart/SubscribingtoRecordChanges/SubscribingtoRecordChanges.html#//apple_ref/doc/uid/TP40014987-CH8-SW1) and [CKQuerySubscription Documentation](https://developer.apple.com/documentation/cloudkit/ckquerysubscription) for more detail.
 
 #### Manage Post Comment Subscriptions
-The Post Detail scene allows users to follow and unfollow new `Comment`s on a given `Post`. Add a function for removing a subscription, and another function that will toggle a subscription for a given `Post`.
+*In this section:* 
+*The Post Detail scene allows users to follow and unfollow new `Comment`s on a given `Post`. Add a function for removing a subscription, and another function that will toggle a subscription for a given `Post`.*
 
 1. Add a function `removeSubscriptionTo(commentsForPost post: ...)` that takes a `Post` parameter and an optional completion closure with `success` and `error` parameters.
 2. Implement the function by calling `delete(withSubscriptionID: ...)` on the public data base. Handle the error which may be returned by the completion handler.  If there is no error complete with `true`.
@@ -681,16 +696,18 @@ The Post Detail scene allows users to follow and unfollow new `Comment`s on a gi
 
 
 ### Update User Interface
-Update the Post Detail scene's `Follow Post` button to display the correct text based on the current user's subscription. Update the IBAction to toggle subscriptions for new comments on a `Post`.
+*In this section you will:* 
+*Update the Post Detail scene's `Follow Post` button to display the correct text based on the current user's subscription. Update the IBAction to toggle subscriptions for new comments on a `Post`.*
 
 1. Update the `updateViews` function to call the `checkSubscriptionTo(commentsForPost: ...)` on the `PostController` and set appropriate text for the button based on the response.  You will need to add an IBOutlet for the button if you have not already.
 2. Implement the `Follow Post` button's IBAction to call the `toggleSubscriptionTo(commentsForPost: ...)` function on the `PostController` and update the `Follow Post` button's text based on the new subscription state.
 
 ### Add Permissions
-Update the Info.plist to declare backgrounding support for responding to remote notifications. Request the user's permission to display remote notifications.
+*In this section you will:* 
+*Update the Info.plist to declare backgrounding support for responding to remote notifications. Request the user's permission to display remote notifications.*
 
 1. Go to the Project File. In the "capabilities" tab, turn on Push Notifications and Background Modes. Under Background Modes, check Remote Notifications.
-2. Request the user's permission to display notifications in the `AppDelegate` `didFinishLaunchingWithOptions` function.
+2. In the `AppDelegate` `didFinishLaunchingWithOptions` function, request the user's permission to display notifications.
     * note: Use the `requestAuthorization` function that is a part of `UNUserNotificationCenter`.
 3. Register the App to receive push notifications `application.registerForRemoteNotifications()`
 
