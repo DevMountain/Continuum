@@ -564,8 +564,8 @@ In order to enable the sharing functionality of this application, we will need t
 At this point you should be able to save a post record and see it in your CloudKit dashboard. You dashboard should look similar to this (after marking the recordName as queryable)
 ![](README/dashboard.png)
 
-2. Update the `addCommentToPost` function to create a postReference from the post that was passed in to our function.  Use that reference as the missing parameter of our comment object.  Then create a `CKRecord` using the convenience initializer which takes in a comment on  `CKRecord`.  
-3. Again use  CloudKit’s `save(_:completionHandler:)` function to save the comment to the database.  If you are wondering where the documentation for that function went, it’s still [here](https://developer.apple.com/documentation/cloudkit/ckdatabase/1449114-save) (:  Handle any error thrown in the save function completion and call your own completion accordingly.
+3. Update the `addCommentToPost` function to create a postReference from the post that was passed in to our function.  Use that reference as the missing parameter of our comment object.  Then create a `CKRecord` using the convenience initializer which takes in a comment on  `CKRecord`.  
+4. Again use  CloudKit’s `save(_:completionHandler:)` function to save the comment to the database.  If you are wondering where the documentation for that function went, it’s still [here](https://developer.apple.com/documentation/cloudkit/ckdatabase/1449114-save) (:  Handle any error thrown in the save function completion and call your own completion accordingly.
 
 At this point, each new `Post` or `Comment` should be pushed to CloudKit when new instances are created from the Add Post or Post Detail scenes. 
 *Note: The safest practice for calling your own completions here is to unwrap the record passed back by CloudKit’s save completion, then initialize a Post or Comment  respectively, and complete with that object.* 
