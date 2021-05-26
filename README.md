@@ -53,7 +53,7 @@ Follow the development plan included with the project to build out the basic vie
 
 ### Getting Started
 1. Fork and Clone the starter project from the [Devmountain Github Project](https://github.com/DevMountain/Continuum)
-2. Switch over to the starter brach by typing `git checkout starter` into terminal.
+2. Switch over to the starter branch by typing `git checkout starter` into terminal.
 3. Now, branch from starter to your own local develop branch where you can begin your coding. To do this, type `git checkout -b develop` into terminal.
 
 ### View Hierarchy
@@ -119,10 +119,8 @@ var photo: UIImage?{
 *Create a `Comment` model object that will hold user-submitted text comments for a specific `Post`.*
 
 1. Add a new `Comment` class to your project.
-2. Add a `text` property of type `String`, a `timestamp` `Date` property, and a weak `post` property of type `Post?`.
-* The comment objects reference to the post object should be weak in order to avoid retain cycles later on.
-`weak var post: Post?`
-3. Add an initializer that accepts text, timestamp, and a post. Provide a default value for the `timestamp` argument equal to the current date, so it can be omitted if desired.
+2. Add a `text` property of type `String` and a `timestamp` `Date` property
+3. Add an initializer that accepts text and timestamp. Provide a default value for the `timestamp` argument equal to the current date, so it can be omitted if desired.
 
 ### Model Object Controller
 *In this section you will:*
@@ -136,7 +134,7 @@ var photo: UIImage?{
 5. Add a `createPostWith` function that takes an image parameter as a `UIImage`, a caption as a `String`, and a completion closure which takes in a `Result<Post?, PostError>` and returns `Void`.
 6. The function will need to initialize a post from the image and caption and append the post to the `PostController`s  `posts` property (think source of truth).  *The completion handler will be utilized with CloudKit integration*
 
-*Note: These CRUD functions will only work locally right now.  We will integrate Cloudkit further along in the project*
+*Note: These CRUD functions will only work locally right now.  We will integrate CloudKit further along in the project*
 
 ### Wire Up Views
 
@@ -227,7 +225,7 @@ Add and implement search functionality to the search view. Implement the Image P
 
 ### Search Controller
 *In this section you will:*
-*Build functionality that will allow the user to search for posts with comments that have specific text in them. For example, if a user creates a `Post` with a photo of a waterfall, and there are comments that mention the waterfall, the user should be able to search the Timeline view for the term 'water' and filter down to that post (and any others with water in the comments).*
+*Build functionality that will allow the user to search for posts with captions that have specific text in them. For example, if a user creates a `Post` with a photo of a waterfall, and the caption mentions the waterfall, the user should be able to search the Timeline view for the term 'water' and filter down to that post (and any others with water in the captions).*
 
 #### Update the Model
 *In this section you will:*
@@ -238,7 +236,7 @@ Add and implement search functionality to the search view. Implement the Image P
 
 Consider how each model object will match to a specific search term. What searchable text is there on a `Post`?
 
-3. Update the `Post` class to conform to the `SearchableRecord` protocol. Return `true` if the `Post`  `caption` matches the search term , otherwise return `false`.
+3. Update the `Post` class to conform to the `SearchableRecord` protocol. Return `true` if the `Post`  `caption` matches the search term *(keep case sensitivity in mind)*, otherwise return `false`.
 
 You can use a Playground to test your `SearchableRecord` and `matches(searchTerm: String)` functionality and understand what you are implementing.
 
@@ -268,13 +266,13 @@ var dataSource: [SearchableRecord] {
 6. Refactor the `UITableViewDataSource` methods to populate the tableView with the new `dataSource` property.  If you get any errors in your `cellForRowAt` about mismatching type, optionally cast your post as a Post (let post = dataSource[indexPath.row] as? Post). 
     *(note: you will also have to update your `prepareForSegue` to use the `dataSouce` property as well)
 7. In `ViewWillAppear` set the results array equal to the `PostController.shared.posts`.
-8. Adopt the UISearchBarDelegate protocol in an extension on `PostListTableViewController`, and implement the `searchBar(_:textDidChange:)` function.  Within the function, using the .filter method, filter `PostController.shared.posts` using the `Post` object's  `matches(searchTerm: String)` function and setting the `resultsArray` equal to the results of the filter.  Call `tableView.reloadData()` at the end of this function.
-9. Now if you notice, if you search for something, but then delete all text in the searchBar, our tableView is empty.  Create an if-else statement that will check if searchText is not empty.  Move the code we used to filter in the case that searchText is not empty.  Otherwise, set `resultsArray` equal to `PostController.shared.posts` then reload the tableView.  
+8. In `ViewDidLoad` set the Search Bar's delegate property equal to `self`
+9. Adopt the UISearchBarDelegate protocol in an extension on `PostListTableViewController`, and implement the `searchBar(_:textDidChange:)` function.  Within the function, using the .filter method, filter `PostController.shared.posts` using the `Post` object's  `matches(searchTerm: String)` function and setting the `resultsArray` equal to the results of the filter.  Call `tableView.reloadData()` at the end of this function. 
 10. Implement the `searchBarCancelButtonClicked(_ searchBar:)`  function, using it to set the results array equal to `PostController.shared.posts` then reload the table view.  You should also set the searchBar's text equal to an empty String and resign its first responder.  This will return the feed back to its normal state of displaying all posts when the user cancels a search.
 11. Implement the `searchBarSearchButtonClicked` and resign the searchBar's first responder.
 12. Implement the `searchBarTextDidBeginEditing` and set `isSearching` to `true`.
 13. Implement the `searchBarTextDidEndEditing`, set `isSearching` to `false`, and set the text in the search bar to an empty string.
-14. In `ViewDidLoad` set the Search Bar's delegate property equal to `self`
+14. Now if you notice, if you search for something, but then delete all text in the searchBar, our tableView is empty.  In our `searchBar(_:textDidChange:)`, create an if-else statement that will check if searchText is not empty.  Move the code we used to filter into the case that searchText is not empty.  Otherwise, set `resultsArray` equal to `PostController.shared.posts` then reload the tableView.  
 
 Add Several Posts with a variety of captions and comments.  Test whether you can successfully search the posts using the search bar.
 
@@ -397,7 +395,7 @@ When you finish this part, the app will support syncing photos, posts, and comme
 
 The whole point of the above computed property is to read and write for our photo property. Look up `CKAsset`, it can only take a fileURL. 
 
-3. We will need a way of converting local `Post` objects into a type which can be saved to CloudKit (i.e. CKRecords).  To achieve this, we will extend CloudKit’s `CKRecord` class and add a  convenience initializer which takes in a single `Post` instance.
+3. We will need a way of converting local `Post` objects into a type which can be saved to CloudKit (i.e. CKRecords).  To achieve this, we will extend CloudKit’s `CKRecord` class and add a convenience initializer which takes in a single `Post` instance.
     * Initialize a `CKRecord` with recordType of “Post” and recordID of the post’s recordID property.
     * Set the values of the CKRecord with the post’s properties.  CloudKit only supports saving Foundational Types (save dictionaries) and will not allow saving `UIImage` or `Comment` instances.  We will therefore need to save a `CKAsset` instead of an image.  We will ignore comments for now, and come back to them using a process called back referencing.
     * *Note: Setting the values of this glorified dictionary will require many     hardcoded strings which can lead to typo errors especially in larger projects.  Consider creating a constants struct to hold each of these string values.*
@@ -459,25 +457,10 @@ You will likely run into some issues as you try to save the comment’s post pro
 
 CloudKit contains a special class for creating references like this called `CKRecord.Reference`.  Please read through the documentation for `CKRecord.Reference` [here](https://developer.apple.com/documentation/cloudkit/ckrecord/reference) . Using a `CKRecord.Reference`  is preferable to just saving the post’s recordID as a string because CloudKit will then handle writing operations for us on the relationship.  For example, if I delete a post, a `CKRecord.Reference` may allow CloudKit to automatically delete all of its  associated comments.  
 
-5. Add a computed property of type `CKRecord.Reference?` to the comment class.  This should return a new `CKRecord.Reference` using the comment’s post object
-
-<details closed>
-<summary><strong>var postReference: CKRecord.Reference</strong></summary>
-    <br>
-
-``` swift
- var postReference: CKRecord.Reference? {
-    guard let post = post else { return nil }
-    return CKRecord.Reference(recordID: post.recordID, action: .deleteSelf)
-  }
-```
-
-</details>
-
-<p></p>
+5. Add a `postReference` property of type `CKRecord.Reference?` to the comment class.  Adjust your Comment initializer for this new property.  *(Note: You may get errors in your PostController file pertaining to this new property on a Comment..we will fix those soon)*)
 
 6. Revisit your convenience initializer on `CKRecord` which takes in a comment and add the postReference to the record being created.
-7. Add a failable convenience initializer on the `Comment` class which takes in a `CKRecord` and a `Post`.  Unwrap the necessary properties for a comment from the ckRecord and call the designated initializer we wrote earlier.
+7. Add a failable convenience initializer on the `Comment` class which takes in a `CKRecord`.  Unwrap the necessary properties for a comment from the ckRecord and call the designated initializer we wrote earlier.
 
 ### Checking to see if the user is signed into iCloud
 If the user isn't signed into their iCloud account, they will not be able to save or fetch data using CloudKit.  Most of the features wouldn't fully work. If they are not signed in, we want to let the user know immediately.  If they are signed into iCloud, we want the app to continue as usual. Take a moment and think about this, if the user is signed in 'do something' if the user isn't signed in 'do something else'. What would our function signature look like?  You will want to do this when the app first launches.
@@ -581,7 +564,7 @@ In order to enable the sharing functionality of this application, we will need t
 At this point you should be able to save a post record and see it in your CloudKit dashboard. You dashboard should look similar to this (after marking the recordName as queryable)
 ![](README/dashboard.png)
 
-2. Update the `addCommentToPost` function to to create a `CKRecord` using the convenience initializer which takes in a comment on  `CKRecord`.  
+2. Update the `addCommentToPost` function to create a postReference from the post that was passed in to our function.  Use that reference as the missing parameter of our comment object.  Then create a `CKRecord` using the convenience initializer which takes in a comment on  `CKRecord`.  
 3. Again use  CloudKit’s `save(_:completionHandler:)` function to save the comment to the database.  If you are wondering where the documentation for that function went, it’s still [here](https://developer.apple.com/documentation/cloudkit/ckdatabase/1449114-save) (:  Handle any error thrown in the save function completion and call your own completion accordingly.
 
 At this point, each new `Post` or `Comment` should be pushed to CloudKit when new instances are created from the Add Post or Post Detail scenes. 
