@@ -26,17 +26,19 @@ class PostListTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath) as! PostTableViewCell
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath) as? PostTableViewCell else {return UITableViewCell()}
+    
     let post = PostController.shared.posts[indexPath.row]
     cell.post = post
+    
     return cell
   }
   
   // MARK: - Navigation
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "toPostDetailVC" {
-      let destinationVC = segue.destination as! PostDetailTableViewController
-      guard let indexPath = tableView.indexPathForSelectedRow else { return }
+      guard let indexPath = tableView.indexPathForSelectedRow,
+            let destinationVC = segue.destination as? PostDetailTableViewController else { return }
       let post = PostController.shared.posts[indexPath.row]
       destinationVC.post = post
     }
