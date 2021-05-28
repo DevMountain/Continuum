@@ -73,7 +73,7 @@ extension Post {
         
         if let photoAsset = ckRecord[PostConstants.photoKey] as? CKAsset {
             do {
-                let url = photoAsset.fileURL
+                guard let url = photoAsset.fileURL else {return nil}
                 let data = try Data(contentsOf: url)
                 postPhoto = UIImage(data: data)
             } catch {
