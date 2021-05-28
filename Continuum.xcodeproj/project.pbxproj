@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		931B9AEC2661538500391494 /* PostError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B9AEB2661538500391494 /* PostError.swift */; };
 		F70EAE2A221340D20096DB13 /* PostListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EAE29221340D20096DB13 /* PostListTableViewController.swift */; };
 		F70EAE2C221341BB0096DB13 /* PostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EAE2B221341BB0096DB13 /* PostDetailTableViewController.swift */; };
 		F70EAE2E2213422D0096DB13 /* AddPostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EAE2D2213422D0096DB13 /* AddPostTableViewController.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		931B9AEB2661538500391494 /* PostError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostError.swift; sourceTree = "<group>"; };
 		F70EAE29221340D20096DB13 /* PostListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListTableViewController.swift; sourceTree = "<group>"; };
 		F70EAE2B221341BB0096DB13 /* PostDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewController.swift; sourceTree = "<group>"; };
 		F70EAE2D2213422D0096DB13 /* AddPostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostTableViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			children = (
 				F70EAE31221342A90096DB13 /* Post.swift */,
 				F70EAE332213455D0096DB13 /* Comment.swift */,
+				931B9AEB2661538500391494 /* PostError.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				F70EAE2E2213422D0096DB13 /* AddPostTableViewController.swift in Sources */,
 				F70EAE372213462E0096DB13 /* PostController.swift in Sources */,
 				F70EAE2C221341BB0096DB13 /* PostDetailTableViewController.swift in Sources */,
+				931B9AEC2661538500391494 /* PostError.swift in Sources */,
 				F70EAE32221342A90096DB13 /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -29,19 +29,14 @@ class Post {
     self.comments = comments
     self.photo = photo
   }
-}
+} //End of class
 
 extension Post: SearchableRecord {
-  func matches(searchTerm: String) -> Bool {
-    if caption.contains(searchTerm) {
-      return true
-    }else {
-      for comment in comments {
-        if comment.matches(searchTerm: searchTerm) {
-          return true
+    func matches(searchTerm: String) -> Bool {
+        if caption.lowercased().contains(searchTerm.lowercased()) {
+            return true
+        } else {
+            return false
         }
-      }
     }
-    return false
-  }
-}
+}//End of extension
