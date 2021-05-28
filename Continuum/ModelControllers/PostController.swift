@@ -18,13 +18,13 @@ class PostController {
   
   //MARK: - CRUD Methods
   //MARK: - Create Methods
-  func addComment(text: String, post: Post, completion: (Comment) -> Void) {
-    let comment = Comment(text: text, post: post)
+  func addComment(text: String, post: Post, completion: (Result<Comment, PostError>) -> Void) {
+    let comment = Comment(text: text)
     post.comments.append(comment)
   }
   
-  func createPostWith(photo: UIImage, caption: String, completion: (Post?) -> Void) {
+  func createPostWith(photo: UIImage, caption: String, completion: (Result<Post?, PostError>) -> Void) {
     let post = Post(photo: photo, caption: caption)
     posts.append(post)
   }
-}
+}//End of class

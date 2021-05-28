@@ -38,7 +38,7 @@ class PostListTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath) as! PostTableViewCell
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath) as? PostTableViewCell else {return UITableViewCell()}
     let post = dataSource[indexPath.row] as? Post
     cell.post = post
     return cell
@@ -47,9 +47,9 @@ class PostListTableViewController: UITableViewController {
   // MARK: - Navigation
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "toPostDetailVC" {
-      let destinationVC = segue.destination as! PostDetailTableViewController
-      guard let indexPath = tableView.indexPathForSelectedRow else { return }
-      let post = PostController.shared.posts[indexPath.row]
+      guard let indexPath = tableView.indexPathForSelectedRow,
+            let destinationVC = segue.destination as? PostDetailTableViewController else { return }
+      let post = dataSource[indexPath.row] as? Post
       destinationVC.post = post
     }
   }
@@ -57,8 +57,13 @@ class PostListTableViewController: UITableViewController {
 
 extension PostListTableViewController: UISearchBarDelegate {
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    resultsArray = PostController.shared.posts.filter { $0.matches(searchTerm: searchText) }
-    tableView.reloadData()
+    if !searchText.isEmpty {
+        resultsArray = PostController.shared.posts.filter { $0.matches(searchTerm: searchText) }
+        tableView.reloadData()
+    } else {
+        resultsArray = PostController.shared.posts
+        tableView.reloadData()
+    }
   }
   
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -67,12 +72,19 @@ extension PostListTableViewController: UISearchBarDelegate {
     searchBar.text = ""
     searchBar.resignFirstResponder()
   }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        searchBar.resignFirstResponder()
+        isSearching = false
+    }
   
   func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
     isSearching = true
   }
   
   func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+    searchBar.text = ""
     isSearching = false
   }
 }

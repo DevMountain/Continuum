@@ -11,17 +11,9 @@ import Foundation
 class Comment {
   let text: String
   let timestamp: Date
-  weak var post: Post?
   
-  init(text: String, post: Post, timestamp: Date = Date()) {
+  init(text: String, timestamp: Date = Date()) {
     self.text = text
-    self.post = post
     self.timestamp = timestamp
   }
-}
-
-extension Comment: SearchableRecord {
-  func matches(searchTerm: String) -> Bool {
-    return text.contains(searchTerm)
-  }
-}
+} //End of class
