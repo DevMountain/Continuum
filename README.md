@@ -130,7 +130,7 @@ var photo: UIImage?{
 2. Add a `shared` singleton property.
 3. Add a `posts` Source of Truth property initialized as an empty array.
 4. Add an `addComment` function that takes a `text` parameter as a `String`,  a `Post` parameter, and a completion closure which takes in a `Result<Comment, PostError>` and returns Void.
-* *Note: You will need to create a `PostError.swift` file with an enum `PostError` of type `LocalizedError`.  We will fill out the cases for this when we implement CloudKit.*
+* *Note: You will need to create a `PostError.swift` file with an enum `PostError` subclass of `LocalizedError`.  We will fill out the cases for this when we implement CloudKit.*
 * *For now this function will only initialize a new comment and append it to the given post's comments array. The completion will be used when CloudKit is implemented*
 5. Add a `createPostWith` function that takes an image parameter as a `UIImage`, a caption as a `String`, and a completion closure which takes in a `Result<Post?, PostError>` and returns `Void`.
 6. The function will need to initialize a post from the image and caption and append the post to the `PostController`s  `posts` property (think source of truth).  *The completion handler will be utilized with CloudKit integration*
