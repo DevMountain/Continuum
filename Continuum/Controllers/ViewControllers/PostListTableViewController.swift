@@ -86,7 +86,7 @@ class PostListTableViewController: UITableViewController {
         if segue.identifier == "toPostDetailVC",
             let indexPath = tableView.indexPathForSelectedRow,
             let destinationVC = segue.destination as? PostDetailTableViewController {
-            let post = PostController.sharedInstance.posts[indexPath.row]
+            let post = dataSource[indexPath.row] as? Post
             destinationVC.post = post
         }
     }

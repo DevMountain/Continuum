@@ -42,8 +42,8 @@ class Post {
     var imageAsset: CKAsset? {
         get {
             let tempDirectory = NSTemporaryDirectory()
-            let tempDirecotryURL = URL(fileURLWithPath: tempDirectory)
-            let fileURL = tempDirecotryURL.appendingPathComponent(recordID.recordName).appendingPathExtension("jpg")
+            let tempDirectoryURL = URL(fileURLWithPath: tempDirectory)
+            let fileURL = tempDirectoryURL.appendingPathComponent(recordID.recordName).appendingPathExtension("jpg")
             
             do {
                 try photoData?.write(to: fileURL)
