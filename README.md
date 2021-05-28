@@ -130,6 +130,7 @@ var photo: UIImage?{
 2. Add a `shared` singleton property.
 3. Add a `posts` Source of Truth property initialized as an empty array.
 4. Add an `addComment` function that takes a `text` parameter as a `String`,  a `Post` parameter, and a completion closure which takes in a `Result<Comment, PostError>` and returns Void.
+* *Note: You will need to create a `PostError.swift` file with an enum `PostError` subclass of `LocalizedError`.  We will fill out the cases for this when we implement CloudKit.*
 * *For now this function will only initialize a new comment and append it to the given post's comments array. The completion will be used when CloudKit is implemented*
 5. Add a `createPostWith` function that takes an image parameter as a `UIImage`, a caption as a `String`, and a completion closure which takes in a `Result<Post?, PostError>` and returns `Void`.
 6. The function will need to initialize a post from the image and caption and append the post to the `PostController`s  `posts` property (think source of truth).  *The completion handler will be utilized with CloudKit integration*
@@ -211,10 +212,6 @@ At this point you should be able to view added post images in the Timeline Post 
 Use the app and polish any rough edges. Check table view cell selection. Check text fields. Check proper view hierarchy and navigation models.  You’re app should look similar to the screenshots below:
 
 ![](README/ContinuumPart1.png)
-
-### Black Diamonds:
-* Use a UIAlertController to present an error message to the User if they do not insert a photo, or caption when trying to create a post.
-* Refactor the code from the first black diamond to present a similar alert if a user tries to create a comment without any text.  Do not repeat the code for creating a UIAlertController.
 
 ## Part Two - UISearchBarDelegate, UIImagePickerController
 
@@ -348,10 +345,6 @@ You have declared a protocol, adopted the protocol, but you now must assign the 
 2. Initialize a `UIActivityViewController` with the `Post`'s image and the caption as the shareable objects.
 3. Present the `UIActivityViewController`.
 
-### Black Diamond:
-
-* Some apps will save photos taken or processed in their app in a custom Album in the user's Camera Roll. Add this feature to the `AddPostTableViewController` so that when a user adds a photo to the app, it saves to a “Continuum” album in their photo library.
-
 ## Part Three - Basic CloudKit
 * Check CloudKit availability
 * Save data to CloudKit
@@ -469,7 +462,7 @@ If the user isn't signed into their iCloud account, they will not be able to sav
 * The `default()` Singleton of the  `CKContainer` class has an `accountStatus` function that can check the users status. There are 4 options, for `CKAccountStatus` which you can read about [here](https://developer.apple.com/documentation/cloudkit/ckaccountstatus). 
 2. In the completion of  `CKContainer.default().accountStatus`, write a switch statement based on the users status inside the closure where you can handle each case as necessary.  You will need a `@escaping` completion closure to handle the events if the user is signed in or not.  If the users account status is anything other than `.available`  we’ll need to call the completion passing in `false` and present an alert to notify the user that they are not signed in. 
 *Note: In this case you will not use the completion of this function for anything more than a print statement; however, it is good practice to include an escaping completion for any function which makes asynchronous calls in order to give yourself or other developer using your code the opportunity to run code when the call has completed.*
-    * Create an extension on UIView controller and add a function `presentSimpleAlertWith(title: String, message: String?)` that presents an alert with the passed in title and message and only has an OK button. You'll call this function within your `checkAccountStatus(completion: @escaping (Bool) -> Void)` Based on the users status you'll provide the proper Error Message to inform the user.  *If you already completed the Black Diamond from Part 1 you will already have the code for this.*
+    * Create an extension on UIView controller and add a function `presentSimpleAlertWith(title: String, message: String?)` that presents an alert with the passed in title and message and only has an OK button. You'll call this function within your `checkAccountStatus(completion: @escaping (Bool) -> Void)` Based on the users status you'll provide the proper Error Message to inform the user. 
 
     If you attempt to present an alert in this class, you'll notice an error. That's because `AppDelegate` isn't a subclass of `UIViewController` nor should it be. We don't have access to any `UIViewController` yet. 
 
@@ -560,6 +553,7 @@ In order to enable the sharing functionality of this application, we will need t
 1. Update the `createPost` function, using the convenience initializer we wrote on `CKRecord` to turn the post into a ckRecord. 
 
 2.  Use CloudKit’s `save(_:completionHandler:)` function which you can read more about [here](https://developer.apple.com/documentation/cloudkit/ckdatabase/1449114-save).  You will need to handle any errors and call the completion on your `createPostWith(photo:caption:completion:)` function inside the completionHandler of the save function.
+* *Add any error cases you see fit to your `PostError.swift` file to avoid errors and be sure to include a `localizedDescription` for each case*
 
 At this point you should be able to save a post record and see it in your CloudKit dashboard. You dashboard should look similar to this (after marking the recordName as queryable)
 ![](README/dashboard.png)
