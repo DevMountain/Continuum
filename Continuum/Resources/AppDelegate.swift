@@ -44,6 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           case .restricted:
             tabBarController?.presentSimpleAlertWith(title: errrorText, message: "Your iCloud account is restricted")
             completion(false)
+          @unknown default:
+            tabBarController?.presentSimpleAlertWith(title: errrorText, message: "Unknown Error")
           }
         }
       }
